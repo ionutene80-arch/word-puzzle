@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -5,13 +6,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>puzzle</title>
+<title>PUZZLE</title>
 
 <style>
 
-/* =========================
+/* =====================================================
    像素字体
-========================= */
+===================================================== */
 
 @font-face {
     font-family: "PixelFont";
@@ -24,59 +25,65 @@
 }
 
 
-/* =========================
-   整体页面
-========================= */
+/* =====================================================
+   页面
+===================================================== */
 
+html,
 body {
     margin: 0;
-    min-height: 100vh;
+    width: 100%;
+    min-height: 100%;
 
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            #272653 0%,
-            #15152d 45%,
-            #080814 100%
-        );
+    background: #080a14;
 
-    color: #fff;
+    color: #e9ecff;
 }
 
 
-/* =========================
+/* =====================================================
    开始页面
-========================= */
+===================================================== */
 
 .start-screen {
 
     position: fixed;
+
     inset: 0;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
 
     overflow: hidden;
 
     background:
-        linear-gradient(
-            rgba(7, 7, 22, 0.45),
-            rgba(7, 7, 22, 0.88)
+        radial-gradient(
+            circle at 50% 38%,
+            rgba(73, 88, 170, 0.30),
+            transparent 28%
         ),
         radial-gradient(
-            circle at 50% 45%,
-            #29275a 0%,
-            #14142f 45%,
-            #05050d 100%
+            circle at 20% 80%,
+            rgba(55, 50, 130, 0.16),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #060812 0%,
+            #10142a 50%,
+            #070913 100%
         );
 
     z-index: 9999;
 }
 
 
-/* 背景像素噪点 */
+/* 像素网格 */
 
 .start-screen::before {
 
@@ -86,28 +93,53 @@ body {
 
     inset: 0;
 
-    pointer-events: none;
-
     background-image:
         linear-gradient(
-            rgba(130,120,255,0.035) 1px,
+            rgba(120,140,255,0.035) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(130,120,255,0.035) 1px,
+            rgba(120,140,255,0.035) 1px,
             transparent 1px
         );
 
-    background-size: 16px 16px;
+    background-size: 14px 14px;
 
-    opacity: 0.5;
+    opacity: 0.7;
+
+    pointer-events: none;
 }
 
 
-/* =========================
+/* 装饰微光 */
+
+.start-screen::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(95,120,255,0.08),
+            transparent 65%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
    标题
-========================= */
+===================================================== */
 
 .title {
 
@@ -115,9 +147,12 @@ body {
 
     text-align: center;
 
-    margin-bottom: 55px;
+    margin-bottom: 58px;
 
-    animation: titleAppear 1s ease forwards;
+    z-index: 2;
+
+    animation:
+        titleAppear 0.9s ease forwards;
 }
 
 
@@ -125,33 +160,39 @@ body {
 
     margin: 0;
 
-    font-size: clamp(38px, 6vw, 68px);
+    font-family: "PixelFont", sans-serif;
 
-    letter-spacing: 10px;
+    font-size:
+        clamp(58px, 10vw, 105px);
 
-    color: #d9d6ff;
+    font-weight: normal;
+
+    letter-spacing: 14px;
+
+    color: #edf0ff;
 
     text-shadow:
-        4px 4px 0 #302d5c,
-        0 0 20px rgba(120,110,255,0.45);
+        4px 4px 0 #252b52,
+        0 0 18px rgba(120,145,255,0.25),
+        0 0 45px rgba(90,110,255,0.12);
 }
 
 
 .title p {
 
-    margin-top: 18px;
+    margin: 18px 0 0;
 
-    font-size: 14px;
+    color: #6f79a5;
 
-    letter-spacing: 7px;
+    font-size: 12px;
 
-    color: #7773a8;
+    letter-spacing: 8px;
 }
 
 
-/* =========================
-   开始按钮
-========================= */
+/* =====================================================
+   开始菜单
+===================================================== */
 
 .menu {
 
@@ -161,62 +202,75 @@ body {
 
     flex-direction: column;
 
-    gap: 18px;
+    gap: 15px;
 
-    animation: menuAppear 1.2s ease forwards;
+    z-index: 2;
+
+    animation:
+        menuAppear 1.1s ease forwards;
 }
 
 
 .menu button {
 
-    width: 250px;
+    width: 260px;
 
-    height: 58px;
+    height: 56px;
 
     padding: 0;
 
-    border: 2px solid rgba(150,145,255,0.45);
+    border:
 
-    border-radius: 4px;
+        1px solid
+        rgba(111,129,195,0.55);
 
-    background: rgba(40,38,82,0.75);
+    border-radius: 3px;
 
-    color: #dedcff;
+    background:
 
-    font-size: 18px;
+        rgba(18,23,47,0.88);
+
+    color: #dfe5ff;
+
+    font-family: "PixelFont", sans-serif;
+
+    font-size: 17px;
 
     letter-spacing: 2px;
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        transform 0.16s ease,
+        background 0.16s ease,
+        border-color 0.16s ease,
+        box-shadow 0.16s ease;
 }
 
 
 .menu button:hover {
 
-    background: rgba(85,78,150,0.75);
+    transform: scale(1.035);
 
-    border-color: #aaa5ff;
+    background: #232c52;
 
-    color: #ffffff;
-
-    transform: translateY(-2px);
+    border-color: #8094dc;
 
     box-shadow:
-        0 5px 20px rgba(90,80,255,0.2);
+        0 0 22px
+        rgba(105,130,255,0.13);
 }
 
 
 .menu button:active {
 
-    transform: translateY(1px);
+    transform: scale(0.97);
 }
 
 
-/* =========================
-   版本文字
-========================= */
+/* =====================================================
+   版本
+===================================================== */
 
 .version {
 
@@ -224,7 +278,9 @@ body {
 
     bottom: 25px;
 
-    color: #4e4b70;
+    z-index: 2;
+
+    color: #3f4768;
 
     font-size: 10px;
 
@@ -232,20 +288,28 @@ body {
 }
 
 
-/* =========================
-   动画
-========================= */
+/* =====================================================
+   开始页面动画
+===================================================== */
 
 @keyframes titleAppear {
 
     from {
+
         opacity: 0;
-        transform: translateY(15px);
+
+        transform:
+            translateY(18px);
+
     }
 
     to {
+
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
+
     }
 }
 
@@ -253,20 +317,28 @@ body {
 @keyframes menuAppear {
 
     from {
+
         opacity: 0;
-        transform: translateY(20px);
+
+        transform:
+            translateY(20px);
+
     }
 
     to {
+
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
+
     }
 }
 
 
-/* =========================
+/* =====================================================
    游戏页面
-========================= */
+===================================================== */
 
 .game-screen {
 
@@ -274,7 +346,8 @@ body {
 
     min-height: 100vh;
 
-    padding: 24px 0;
+    padding:
+        30px 20px;
 
     flex-direction: column;
 
@@ -282,21 +355,28 @@ body {
 
     align-items: center;
 
-    gap: 20px;
+    gap: 18px;
 
     background:
+
         radial-gradient(
-            circle at center,
-            #292752 0%,
-            #17172f 45%,
-            #090914 100%
+            circle at 50% 40%,
+            rgba(55,65,125,0.22),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            135deg,
+            #070914,
+            #11162b,
+            #080a14
         );
 }
 
 
-/* =========================
-   游戏顶部返回按钮
-========================= */
+/* =====================================================
+   返回按钮
+===================================================== */
 
 .back-btn {
 
@@ -306,35 +386,39 @@ body {
 
     left: 18px;
 
-    padding: 7px 13px;
+    padding: 7px 13px !important;
 
-    font-size: 13px;
+    font-size: 12px !important;
 
-    border: 1px solid #55527e;
+    background:
+        rgba(12,16,32,0.8) !important;
 
-    border-radius: 4px;
+    border:
+        1px solid #30395f !important;
 
-    background: rgba(30,30,55,0.8);
+    border-radius: 3px !important;
 
-    color: #aaa7d8;
+    color: #747fa8 !important;
 
-    cursor: pointer;
-
-    z-index: 20;
+    z-index: 30;
 }
 
 
 .back-btn:hover {
 
-    background: #35335e;
+    background:
+        #1b2342 !important;
 
-    color: white;
+    color: #cbd4ff !important;
+
+    border-color:
+        #6071ae !important;
 }
 
 
-/* =========================
-   游戏方阵
-========================= */
+/* =====================================================
+   方阵
+===================================================== */
 
 .grid {
 
@@ -342,7 +426,7 @@ body {
 
     position: relative;
 
-    gap: 4px 12px;
+    gap: 5px 10px;
 
     font-size: 1.6rem;
 
@@ -356,12 +440,6 @@ body {
 
 .grid .cell {
 
-    transition: color 0.2s;
-
-    text-align: center;
-
-    line-height: 1.2;
-
     width: 1.45em;
 
     height: 1.45em;
@@ -372,71 +450,278 @@ body {
 
     justify-content: center;
 
-    border: 2px solid transparent;
+    border: 0;
 
-    border-radius: 50%;
+    border-radius: 3px;
 
-    box-sizing: border-box;
+    background: transparent;
+
+    color: #dce3ff;
 
     cursor: pointer;
+
+    transition:
+
+        transform 0.12s ease,
+
+        color 0.12s ease,
+
+        text-shadow 0.12s ease;
 }
 
 
 .grid .cell.empty {
 
     cursor: default;
+
 }
 
+
+/* =====================================================
+   点击文字
+===================================================== */
 
 .grid .cell.selected {
 
-    background: rgba(143,216,255,0.22);
+    background: transparent;
 
-    border-color: #8fd8ff;
+    color: #ffffff !important;
+
+    transform: scale(1.15);
+
+    text-shadow:
+
+        0 0 8px
+        rgba(130,170,255,0.8),
+
+        0 0 18px
+        rgba(100,140,255,0.35);
 }
 
 
-/* =========================
-   正确答案圈
-========================= */
+/* 点击动画 */
 
-.found-overlay {
+.grid .cell.pop {
 
-    position: absolute;
+    animation:
+        letterPop 0.28s ease;
+}
 
-    inset: 0;
 
-    width: 100%;
+@keyframes letterPop {
 
-    height: 100%;
+    0% {
 
-    overflow: visible;
+        transform:
+            scale(1);
+
+    }
+
+    45% {
+
+        transform:
+            scale(1.38);
+
+        text-shadow:
+            0 0 15px
+            rgba(140,175,255,0.8);
+    }
+
+    100% {
+
+        transform:
+            scale(1);
+    }
+}
+
+
+/* =====================================================
+   找对动画
+===================================================== */
+
+.grid .cell.correct {
+
+    animation:
+        correctPop 0.46s ease;
+}
+
+
+@keyframes correctPop {
+
+    0% {
+
+        transform:
+            scale(1);
+
+        color: #dce3ff;
+    }
+
+    35% {
+
+        transform:
+            scale(1.4);
+
+        color: #ffffff;
+
+        text-shadow:
+            0 0 18px
+            rgba(135,185,255,0.95);
+    }
+
+    62% {
+
+        transform:
+            scale(0.88);
+    }
+
+    100% {
+
+        transform:
+            scale(1);
+
+        color: #dce3ff;
+    }
+}
+
+
+/* =====================================================
+   找错动画
+===================================================== */
+
+.grid .cell.wrong {
+
+    animation:
+        wrongShake 0.4s ease;
+}
+
+
+@keyframes wrongShake {
+
+    0% {
+
+        transform:
+            translateX(0);
+
+    }
+
+    15% {
+
+        transform:
+            translateX(-6px);
+
+        color: #ff6e91;
+    }
+
+    30% {
+
+        transform:
+            translateX(6px);
+    }
+
+    45% {
+
+        transform:
+            translateX(-5px);
+    }
+
+    60% {
+
+        transform:
+            translateX(4px);
+    }
+
+    75% {
+
+        transform:
+            translateX(-2px);
+    }
+
+    100% {
+
+        transform:
+            translateX(0);
+
+        color: #dce3ff;
+    }
+}
+
+
+/* =====================================================
+   FOUND 提示
+===================================================== */
+
+#foundPopup {
+
+    position: fixed;
+
+    top: 28px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    color: #a9c5ff;
+
+    font-size: 17px;
+
+    letter-spacing: 4px;
 
     pointer-events: none;
 
-    z-index: 2;
+    opacity: 0;
+
+    z-index: 10000;
 }
 
 
-/* =========================
-   选择区域
-========================= */
+#foundPopup.show {
 
-.selection-area {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-    gap: 12px;
-
-    width: min(90vw,700px);
+    animation:
+        foundPopup 0.85s ease forwards;
 }
 
+
+@keyframes foundPopup {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -10px)
+            scale(0.9);
+    }
+
+    25% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, 0)
+            scale(1);
+    }
+
+    70% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -12px)
+            scale(1.02);
+    }
+}
+
+
+/* =====================================================
+   选词框
+===================================================== */
 
 #selectedWord {
 
@@ -446,33 +731,35 @@ body {
 
     min-height: 1.5em;
 
-    padding: 10px 14px;
+    padding: 10px 16px;
 
-    border: 2px solid #8fd8ff;
+    border:
+        1px solid #38446d;
 
-    border-radius: 6px;
+    border-radius: 3px;
 
-    background: #202039;
+    background:
+        rgba(15,20,40,0.88);
 
     text-align: center;
 
-    color: #fff;
+    color: #dfe6ff;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 
     overflow-wrap: anywhere;
 }
 
 
-/* =========================
+/* =====================================================
    输入区域
-========================= */
+===================================================== */
 
 .input-area {
 
     display: flex;
 
-    gap: 12px;
+    gap: 10px;
 
     justify-content: center;
 
@@ -490,111 +777,139 @@ input {
 
     text-align: center;
 
-    border: 2px solid #8fd8ff;
+    border:
+        1px solid #38446d;
 
-    border-radius: 6px;
+    border-radius: 3px;
 
-    background: #202039;
+    background: #11162b;
 
     color: #fff;
 
     outline: none;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+
+input:focus {
+
+    border-color: #7187cf;
+
+    box-shadow:
+        0 0 14px
+        rgba(100,130,255,0.15);
 }
 
 
 input::placeholder {
 
-    color: #666;
+    color: #555d7c;
 }
 
 
-/* =========================
+/* =====================================================
    游戏按钮
-========================= */
+===================================================== */
 
 .game-screen button {
 
-    padding: 10px 20px;
+    padding: 9px 17px;
 
-    font-size: 1rem;
+    font-size: 14px;
 
-    border: none;
+    border:
+        1px solid #3b466d;
 
-    border-radius: 6px;
+    border-radius: 3px;
 
-    background: #638fc2;
+    background: #181e39;
 
-    color: #fff;
+    color: #dce3ff;
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        background 0.15s,
+        border-color 0.15s,
+        transform 0.15s;
 }
 
 
 .game-screen button:hover {
 
-    background: #79a8df;
+    background: #273159;
+
+    border-color: #7184c7;
+}
+
+
+.game-screen button:active {
+
+    transform:
+        scale(0.96);
 }
 
 
 #undoBtn {
 
-    background: #555 !important;
+    background:
+        #202641 !important;
 }
 
 
 #clearBtn {
 
-    background: #444 !important;
+    background:
+        #171c32 !important;
 }
 
 
 #resetBtn {
 
-    background: #444;
+    background:
+        #151a2c;
 
-    font-size: 0.85rem;
+    font-size: 12px;
 
-    padding: 6px 14px;
+    padding:
+        6px 14px;
 }
 
 
-#resetBtn:hover {
-
-    background: #666;
-}
-
-
-/* =========================
-   提示文字
-========================= */
+/* =====================================================
+   提示
+===================================================== */
 
 .tip {
 
-    color: #777;
+    color: #687292;
 
-    font-size: 0.95rem;
+    font-size: 13px;
 
     margin: 0;
+
+    min-height: 18px;
 }
 
 
 .tip.success {
 
-    color: #70e6a0;
+    color: #8bd7c0;
 }
 
 
-/* =========================
-   已找到词语
-========================= */
+/* =====================================================
+   已找到词
+===================================================== */
 
 .words-box {
 
-    color: #aaa;
+    color: #747d9c;
 
-    font-size: 0.95rem;
+    font-size: 13px;
 
     text-align: center;
 
@@ -608,35 +923,40 @@ input::placeholder {
 
     display: inline-block;
 
-    background: #24243d;
+    background:
+        #141a31;
 
-    padding: 2px 8px;
+    padding:
+        2px 8px;
 
-    border-radius: 4px;
+    border:
+        1px solid #293459;
+
+    border-radius: 2px;
 
     margin: 2px;
 
-    color: #8fd8ff;
+    color: #8fa9e9;
 }
 
 
-/* =========================
+/* =====================================================
    计数
-========================= */
+===================================================== */
 
 .counter {
 
-    color: #aaa;
+    color: #687292;
 
-    font-size: 1.05rem;
+    font-size: 14px;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
 
 
 .counter .num {
 
-    color: #8fd8ff;
+    color: #9bb5ff;
 
     font-weight: 700;
 }
@@ -644,38 +964,90 @@ input::placeholder {
 
 .save-tip {
 
-    color: #555;
+    color: #4c5574;
 
-    font-size: 0.8rem;
+    font-size: 11px;
 
     margin: 0;
 }
 
 
-/* =========================
+/* =====================================================
+   全部完成动画
+===================================================== */
+
+.game-screen.complete {
+
+    animation:
+        completeFlash 0.8s ease;
+}
+
+
+@keyframes completeFlash {
+
+    0% {
+
+        filter:
+            brightness(1);
+    }
+
+    35% {
+
+        filter:
+            brightness(1.35);
+    }
+
+    100% {
+
+        filter:
+            brightness(1);
+    }
+}
+
+
+/* =====================================================
    手机适配
-========================= */
+===================================================== */
 
 @media (max-width: 600px) {
 
     .title h1 {
 
-        font-size: 34px;
+        font-size: 45px;
+
+        letter-spacing: 7px;
+    }
+
+
+    .title p {
+
+        font-size: 9px;
 
         letter-spacing: 5px;
     }
 
+
     .grid {
 
-        font-size: 1.15rem;
+        font-size: 1.12rem;
 
         gap: 3px 5px;
     }
+
 
     .selection-area {
 
         width: 95vw;
     }
+
+
+    .game-screen {
+
+        padding-left: 5px;
+
+        padding-right: 5px;
+    }
+
 }
 
 </style>
@@ -693,7 +1065,7 @@ input::placeholder {
 
     <div class="title">
 
-        <h1>书 · 影 迷 城</h1>
+        <h1>PUZZLE</h1>
 
         <p>FIND THE TITLE</p>
 
@@ -705,6 +1077,7 @@ input::placeholder {
         <button onclick="startGame()">
             ▶ 开始游戏
         </button>
+
 
         <button onclick="showRules()">
             游戏规则
@@ -728,43 +1101,78 @@ input::placeholder {
 <div id="gameScreen" class="game-screen">
 
 
-    <button class="back-btn" onclick="backToStart()">
+    <!-- 找到答案时的顶部提示 -->
+
+    <div id="foundPopup"></div>
+
+
+    <!-- 返回首页 -->
+
+    <button
+        class="back-btn"
+        onclick="backToStart()"
+    >
         ← 返回
     </button>
 
 
-    <div class="grid" id="grid"></div>
+    <!-- 方阵 -->
+
+    <div
+        class="grid"
+        id="grid"
+    ></div>
 
 
     <p class="tip">
-        点击上方文字选字，或者直接在下面输入词语。
+
+        点击文字选择汉字，
+        或者直接输入词语。
+
     </p>
 
 
+    <!-- 点击选字 -->
+
     <div class="selection-area">
 
-        <div id="selectedWord" aria-live="polite">
+
+        <div
+            id="selectedWord"
+            aria-live="polite"
+        >
             （点击文字开始）
         </div>
+
 
         <button id="submitBtn">
             确认
         </button>
 
-        <button id="undoBtn" type="button">
+
+        <button
+            id="undoBtn"
+            type="button"
+        >
             撤销一个字
         </button>
 
-        <button id="clearBtn" type="button">
+
+        <button
+            id="clearBtn"
+            type="button"
+        >
             清空
         </button>
+
 
     </div>
 
 
-    <!-- 输入框 -->
+    <!-- 输入答案 -->
 
     <div class="input-area">
+
 
         <input
             id="wordInput"
@@ -773,39 +1181,60 @@ input::placeholder {
             autocomplete="off"
         />
 
-        <button id="inputSubmitBtn" type="button">
+
+        <button
+            id="inputSubmitBtn"
+            type="button"
+        >
             输入确认
         </button>
 
+
     </div>
 
+
+    <!-- 计数 -->
 
     <p class="counter">
 
         已猜出
 
-        <span class="num" id="foundCount">
+        <span
+            class="num"
+            id="foundCount"
+        >
             0
         </span>
 
         /
 
-        <span class="num" id="totalCount">
+        <span
+            class="num"
+            id="totalCount"
+        >
             49
         </span>
 
     </p>
 
 
-    <p class="tip" id="tip"></p>
+    <!-- 提示 -->
+
+    <p
+        class="tip"
+        id="tip"
+    ></p>
 
 
     <p class="tip">
-        已输入的词：
+        已找到的词：
     </p>
 
 
-    <div class="words-box" id="wordsBox">
+    <div
+        class="words-box"
+        id="wordsBox"
+    >
         （空）
     </div>
 
@@ -815,9 +1244,13 @@ input::placeholder {
     </button>
 
 
-    <p class="save-tip" id="saveTip">
+    <p
+        class="save-tip"
+        id="saveTip"
+    >
         进度会自动保存
     </p>
+
 
 </div>
 
@@ -825,24 +1258,35 @@ input::placeholder {
 
 <script>
 
+
 /* =====================================================
-   开始页面控制
+   开始页面
 ===================================================== */
 
 function startGame() {
 
-    document.getElementById("startScreen").style.display = "none";
+    document
+        .getElementById("startScreen")
+        .style.display = "none";
 
-    document.getElementById("gameScreen").style.display = "flex";
+
+    document
+        .getElementById("gameScreen")
+        .style.display = "flex";
 
 }
 
 
 function backToStart() {
 
-    document.getElementById("gameScreen").style.display = "none";
+    document
+        .getElementById("gameScreen")
+        .style.display = "none";
 
-    document.getElementById("startScreen").style.display = "flex";
+
+    document
+        .getElementById("startScreen")
+        .style.display = "flex";
 
 }
 
@@ -850,21 +1294,27 @@ function backToStart() {
 function showRules() {
 
     alert(
-`游戏规则
 
-1. 点击方阵中的文字选择汉字。
+`【PUZZLE 游戏规则】
 
-2. 组成一个完整的电影名或书名。
+在方阵中寻找隐藏的电影名和书名。
 
-3. 点击“确认”提交答案。
+① 点击文字选择汉字。
 
-4. 猜对后，会用淡蓝色半透明的圈标记出来。
+② 可以横向、纵向或斜向寻找。
 
-5. 也可以直接在输入框输入答案。
+③ 组成完整词语后点击“确认”。
 
-6. 找出全部答案即可通关！
+④ 找对后文字会产生提示动画。
 
-祝你游戏愉快！`
+⑤ 找错后文字会抖动提示。
+
+⑥ 也可以直接输入答案。
+
+⑦ 找出全部答案即可完成游戏。
+
+祝你好运！`
+
     );
 
 }
@@ -875,40 +1325,69 @@ function showRules() {
 ===================================================== */
 
 const GRID_LINES = [
+
 "伊见人情年芳声智城雪心老内环超鸟人",
+
 "罚偏感样时泳者之心灵奇旅友游脱能之",
+
 "爱与花束般的恋爱乐之城缘红记台戏陆",
+
 "智慢罪奥维尔号像恩音翠石日假马罗暗",
+
 "店傲赎救的克申肖指伯翡主公灵幽日夏",
+
 "论饭鱼汉尼拔羊的环德公八犬忠里欧洛",
+
 "席象大坦小小狮子王小妇人佳世乱写特",
+
 "新红泰斯猪丹麦女孩姐孩小笨迹奇脑的",
+
 "灯猪里肯佩悉的烧冬男天空之城头低网",
+
 "追莫戈兰奇达怪燃迹春光乍泄围俗怪族",
+
 "忆迪尔弗拉多布奇的城光月球小鬼当家",
+
 "似里博普诺兰虻班物格光升说她对有偷",
+
 "水阿穿婆阿奥牛动格语棋王之剧喜奶小"
+
 ];
 
 
 const INIT_LEVELS = [
+
 [0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0],
+
 [1,1,0,0,0,1,1,2,2,1,1,1,1,0,0,0,0],
+
 [0,2,1,1,1,1,1,2,2,1,2,0,0,1,0,0,0],
+
 [0,1,1,1,1,1,2,1,1,1,1,0,1,1,1,1,0],
+
 [1,1,1,1,1,2,1,3,1,1,1,2,1,2,2,1,2],
+
 [0,1,1,1,2,1,1,1,1,1,2,1,1,1,0,0,1],
+
 [0,0,2,2,1,1,1,3,4,5,1,2,1,1,1,0,1],
+
 [0,1,1,2,1,1,1,3,1,2,2,1,1,1,1,0,1],
+
 [0,1,0,1,2,1,1,1,1,1,1,1,1,2,0,1,1],
+
 [0,0,0,1,1,3,1,2,1,1,2,1,1,1,1,0,0],
+
 [0,0,0,1,1,1,1,2,0,0,1,0,0,2,1,1,1],
+
 [0,0,0,1,1,1,1,0,1,0,1,0,1,0,0,0],
+
 [0,0,1,0,0,0,1,0,0,1,0,1,1,1,1,0,0]
+
 ];
 
 
 const ALLOWED_WORDS = [
+
 "天空之城",
 "小妇人",
 "狮子王",
@@ -958,47 +1437,60 @@ const ALLOWED_WORDS = [
 "翡翠城",
 "罗马假日",
 "夏洛特的网"
+
 ];
 
 
-const ALLOWED_SET = new Set(ALLOWED_WORDS);
+const ALLOWED_SET =
+    new Set(ALLOWED_WORDS);
 
 
 const colors = [
-"#ff4d4d",
-"#ff9f43",
-"#ffd93d",
-"#4dff88",
-"#4dabff",
-"#9b4dff"
+
+"#ff6b7f",
+"#ffb86b",
+"#e6cf63",
+"#7ed6a7",
+"#6da8ff",
+"#9a8cff"
+
 ];
 
 
 const SAVE_KEY =
-"puzzle_save_v3_" +
-ALLOWED_WORDS.join("_").length;
+    "puzzle_save_v3_" +
+    ALLOWED_WORDS.join("_").length;
 
 
 const gridData =
-GRID_LINES.map(line => [...line]);
+    GRID_LINES.map(
+        line => [...line]
+    );
 
 
 const ROWS =
-gridData.length;
+    gridData.length;
 
 
 const COLS =
-Math.max(...gridData.map(r => r.length));
+    Math.max(
+        ...gridData.map(
+            r => r.length
+        )
+    );
 
 
 let currentLevel =
-INIT_LEVELS.map(row => [...row]);
+    INIT_LEVELS.map(
+        row => [...row]
+    );
 
 
 let foundWords = [];
 
 
-let foundSet = new Set();
+let foundSet =
+    new Set();
 
 
 let selectedCells = [];
@@ -1016,35 +1508,54 @@ function loadSave() {
     try {
 
         const raw =
-            localStorage.getItem(SAVE_KEY);
+            localStorage.getItem(
+                SAVE_KEY
+            );
+
 
         if (!raw) return;
+
 
         const data =
             JSON.parse(raw);
 
+
         if (
             !data.currentLevel ||
             data.currentLevel.length !== ROWS
-        ) return;
+        ) {
+
+            return;
+
+        }
+
 
         currentLevel =
             data.currentLevel;
 
+
         foundWords =
             data.foundWords || [];
+
 
         foundSet =
             new Set(foundWords);
 
+
         foundPaths =
-            Array.isArray(data.foundPaths)
+            Array.isArray(
+                data.foundPaths
+            )
                 ? data.foundPaths
                 : [];
 
-    } catch (e) {
 
-        console.warn("读取存档失败", e);
+    } catch(e) {
+
+        console.warn(
+            "读取存档失败",
+            e
+        );
 
     }
 
@@ -1056,17 +1567,27 @@ function save() {
     try {
 
         localStorage.setItem(
+
             SAVE_KEY,
+
             JSON.stringify({
+
                 currentLevel,
+
                 foundWords,
+
                 foundPaths
+
             })
+
         );
 
-    } catch (e) {
+    } catch(e) {
 
-        console.warn("保存失败", e);
+        console.warn(
+            "保存失败",
+            e
+        );
 
     }
 
@@ -1078,11 +1599,13 @@ function save() {
 ===================================================== */
 
 const gridEl =
-document.getElementById("grid");
+    document.getElementById(
+        "grid"
+    );
 
 
 gridEl.style.gridTemplateColumns =
-`repeat(${COLS}, 1fr)`;
+    `repeat(${COLS}, 1fr)`;
 
 
 const cellEls = [];
@@ -1096,6 +1619,7 @@ for (
 
     cellEls[r] = [];
 
+
     for (
         let c = 0;
         c < COLS;
@@ -1105,15 +1629,21 @@ for (
         const ch =
             gridData[r][c] || "";
 
+
         const cell =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         cell.className =
             "cell" +
             (ch ? "" : " empty");
 
+
         cell.textContent =
             ch;
+
 
         if (ch) {
 
@@ -1122,20 +1652,19 @@ for (
                 "button"
             );
 
+
             cell.setAttribute(
                 "tabindex",
                 "0"
             );
 
-            cell.setAttribute(
-                "aria-label",
-                `第${r+1}行第${c+1}列，${ch}`
-            );
 
             cell.addEventListener(
                 "click",
-                () => selectCell(r,c)
+                () =>
+                    selectCell(r,c)
             );
+
 
             cell.addEventListener(
                 "keydown",
@@ -1157,9 +1686,12 @@ for (
 
         }
 
+
         gridEl.appendChild(cell);
 
-        cellEls[r][c] = cell;
+
+        cellEls[r][c] =
+            cell;
 
     }
 
@@ -1167,7 +1699,7 @@ for (
 
 
 /* =====================================================
-   颜色
+   文字颜色
 ===================================================== */
 
 function paint(r,c) {
@@ -1175,15 +1707,18 @@ function paint(r,c) {
     const lv =
         currentLevel[r][c];
 
+
     const cell =
         cellEls[r][c];
 
+
     if (!cell) return;
+
 
     if (lv <= 0) {
 
         cell.style.color =
-            "#ffffff";
+            "#dce3ff";
 
     } else {
 
@@ -1222,27 +1757,35 @@ function paintAll() {
 
 
 /* =====================================================
-   查找答案
+   查找词
 ===================================================== */
 
 function findWord(word) {
 
-    if (!word) return null;
+    if (!word)
+        return null;
 
-    const chars = [...word];
+
+    const chars =
+        [...word];
+
 
     const len =
         chars.length;
 
+
     const dirs = [
+
         [0,1],
         [0,-1],
         [1,0],
         [-1,0],
+
         [1,1],
         [1,-1],
         [-1,1],
         [-1,-1]
+
     ];
 
 
@@ -1261,10 +1804,14 @@ function findWord(word) {
             if (
                 gridData[r][c] !==
                 chars[0]
-            ) continue;
+            )
+                continue;
 
 
-            for (const [dr,dc] of dirs) {
+            for (
+                const [dr,dc]
+                of dirs
+            ) {
 
                 let ok = true;
 
@@ -1280,15 +1827,19 @@ function findWord(word) {
                     const nr =
                         r + dr * k;
 
+
                     const nc =
                         c + dc * k;
 
 
                     if (
+
                         nr < 0 ||
                         nr >= ROWS ||
+
                         nc < 0 ||
                         nc >= COLS
+
                     ) {
 
                         ok = false;
@@ -1299,8 +1850,8 @@ function findWord(word) {
 
 
                     if (
-                        gridData[nr][nc] !==
-                        chars[k]
+                        gridData[nr][nc]
+                        !== chars[k]
                     ) {
 
                         ok = false;
@@ -1338,84 +1889,98 @@ function findWord(word) {
 ===================================================== */
 
 const selectedWordEl =
-document.getElementById(
-    "selectedWord"
-);
+    document.getElementById(
+        "selectedWord"
+    );
 
 
 const submitBtn =
-document.getElementById(
-    "submitBtn"
-);
+    document.getElementById(
+        "submitBtn"
+    );
 
 
 const undoBtn =
-document.getElementById(
-    "undoBtn"
-);
+    document.getElementById(
+        "undoBtn"
+    );
 
 
 const clearBtn =
-document.getElementById(
-    "clearBtn"
-);
+    document.getElementById(
+        "clearBtn"
+    );
 
 
 const tip =
-document.getElementById(
-    "tip"
-);
+    document.getElementById(
+        "tip"
+    );
 
 
 const foundCountEl =
-document.getElementById(
-    "foundCount"
-);
+    document.getElementById(
+        "foundCount"
+    );
 
 
 const wordsBox =
-document.getElementById(
-    "wordsBox"
-);
+    document.getElementById(
+        "wordsBox"
+    );
 
 
 const resetBtn =
-document.getElementById(
-    "resetBtn"
-);
+    document.getElementById(
+        "resetBtn"
+    );
 
 
 const saveTip =
-document.getElementById(
-    "saveTip"
-);
+    document.getElementById(
+        "saveTip"
+    );
 
 
 const wordInput =
-document.getElementById(
-    "wordInput"
-);
+    document.getElementById(
+        "wordInput"
+    );
 
 
 const inputSubmitBtn =
-document.getElementById(
-    "inputSubmitBtn"
-);
+    document.getElementById(
+        "inputSubmitBtn"
+    );
+
+
+const gameScreen =
+    document.getElementById(
+        "gameScreen"
+    );
+
+
+const foundPopup =
+    document.getElementById(
+        "foundPopup"
+    );
 
 
 document.getElementById(
     "totalCount"
 ).textContent =
-ALLOWED_WORDS.length;
+    ALLOWED_WORDS.length;
 
 
 /* =====================================================
-   已找到词语
+   找到的词
 ===================================================== */
 
 function renderWords() {
 
-    if (foundWords.length === 0) {
+    if (
+        foundWords.length === 0
+    ) {
 
         wordsBox.textContent =
             "（空）";
@@ -1429,7 +1994,7 @@ function renderWords() {
         foundWords
             .map(
                 w =>
-                `<span class="word">${w}</span>`
+                    `<span class="word">${w}</span>`
             )
             .join("");
 
@@ -1444,17 +2009,24 @@ function updateCounter() {
 }
 
 
+/* =====================================================
+   保存提示
+===================================================== */
+
 function flashSaveTip(msg) {
 
     saveTip.textContent =
         msg || "✓ 已保存";
 
+
     saveTip.style.color =
-        "#70e6a0";
+        "#8bd7c0";
+
 
     clearTimeout(
         flashSaveTip._t
     );
+
 
     flashSaveTip._t =
         setTimeout(
@@ -1464,7 +2036,7 @@ function flashSaveTip(msg) {
                     "进度会自动保存";
 
                 saveTip.style.color =
-                    "#555";
+                    "#4c5574";
 
             },
             1000
@@ -1480,13 +2052,16 @@ function flashSaveTip(msg) {
 function renderSelection() {
 
     selectedWordEl.textContent =
+
         selectedCells.length
+
             ? selectedCells
                 .map(
                     ([r,c]) =>
-                    gridData[r][c]
+                        gridData[r][c]
                 )
                 .join("")
+
             : "（点击文字开始）";
 
 
@@ -1505,12 +2080,17 @@ function renderSelection() {
             cellEls[r][c]
                 .classList
                 .toggle(
+
                     "selected",
+
                     selectedCells.some(
                         ([rr,cc]) =>
+
                             rr === r &&
                             cc === c
+
                     )
+
                 );
 
         }
@@ -1520,17 +2100,58 @@ function renderSelection() {
 }
 
 
+/* =====================================================
+   点击文字
+===================================================== */
+
 function selectCell(r,c) {
 
     if (!gridData[r][c])
         return;
 
 
+    const cell =
+        cellEls[r][c];
+
+
+    /*
+       点击时：
+       放大 → 缩小
+    */
+
+    cell.classList.remove(
+        "pop"
+    );
+
+
+    void cell.offsetWidth;
+
+
+    cell.classList.add(
+        "pop"
+    );
+
+
+    setTimeout(
+        () => {
+
+            cell.classList.remove(
+                "pop"
+            );
+
+        },
+        300
+    );
+
+
     const idx =
         selectedCells.findIndex(
+
             ([rr,cc]) =>
+
                 rr === r &&
                 cc === c
+
         );
 
 
@@ -1553,12 +2174,18 @@ function selectCell(r,c) {
 
     renderSelection();
 
+
     tip.textContent = "";
 
-    tip.className = "tip";
+    tip.className =
+        "tip";
 
 }
 
+
+/* =====================================================
+   清除选择
+===================================================== */
 
 function clearSelection() {
 
@@ -1570,227 +2197,75 @@ function clearSelection() {
 
 
 /* =====================================================
-   正确答案圈
+   找对提示
 ===================================================== */
 
-function removeFoundOverlay() {
+function showFoundPopup(word) {
 
-    const oldOverlay =
-        gridEl.querySelector(
-            ".found-overlay"
-        );
-
-    if (oldOverlay)
-        oldOverlay.remove();
-
-}
+    foundPopup.textContent =
+        "FOUND  ·  " + word;
 
 
-function renderFoundPaths() {
-
-    removeFoundOverlay();
-
-    if (!foundPaths.length)
-        return;
-
-
-    const rect =
-        gridEl.getBoundingClientRect();
-
-
-    const svgNS =
-        "http://www.w3.org/2000/svg";
-
-
-    const svg =
-        document.createElementNS(
-            svgNS,
-            "svg"
-        );
-
-
-    svg.setAttribute(
-        "class",
-        "found-overlay"
+    foundPopup.classList.remove(
+        "show"
     );
 
 
-    svg.setAttribute(
-        "viewBox",
-        `0 0 ${gridEl.clientWidth} ${gridEl.clientHeight}`
+    void foundPopup.offsetWidth;
+
+
+    foundPopup.classList.add(
+        "show"
     );
-
-
-    svg.setAttribute(
-        "preserveAspectRatio",
-        "none"
-    );
-
-
-    foundPaths.forEach(path => {
-
-        if (!path || !path.length)
-            return;
-
-
-        const first =
-            cellEls[path[0][0]] &&
-            cellEls[path[0][0]][path[0][1]];
-
-
-        const lastCoord =
-            path[path.length - 1];
-
-
-        const last =
-            cellEls[lastCoord[0]] &&
-            cellEls[lastCoord[0]][lastCoord[1]];
-
-
-        if (!first || !last)
-            return;
-
-
-        const a =
-            first.getBoundingClientRect();
-
-
-        const b =
-            last.getBoundingClientRect();
-
-
-        const x1 =
-            a.left +
-            a.width / 2 -
-            rect.left;
-
-
-        const y1 =
-            a.top +
-            a.height / 2 -
-            rect.top;
-
-
-        const x2 =
-            b.left +
-            b.width / 2 -
-            rect.left;
-
-
-        const y2 =
-            b.top +
-            b.height / 2 -
-            rect.top;
-
-
-        const cx =
-            (x1 + x2) / 2;
-
-
-        const cy =
-            (y1 + y2) / 2;
-
-
-        const distance =
-            Math.hypot(
-                x2 - x1,
-                y2 - y1
-            );
-
-
-        const angle =
-            Math.atan2(
-                y2 - y1,
-                x2 - x1
-            ) * 180 / Math.PI;
-
-
-        const oval =
-            document.createElementNS(
-                svgNS,
-                "ellipse"
-            );
-
-
-        oval.setAttribute(
-            "cx",
-            cx
-        );
-
-
-        oval.setAttribute(
-            "cy",
-            cy
-        );
-
-
-        oval.setAttribute(
-            "rx",
-            Math.max(
-                distance / 2 +
-                a.width * 0.62,
-                a.width * 0.72
-            )
-        );
-
-
-        oval.setAttribute(
-            "ry",
-            Math.max(
-                a.height * 0.64,
-                13
-            )
-        );
-
-
-        oval.setAttribute(
-            "fill",
-            "#8fd8ff"
-        );
-
-
-        oval.setAttribute(
-            "fill-opacity",
-            "0.32"
-        );
-
-
-        oval.setAttribute(
-            "stroke",
-            "#8fd8ff"
-        );
-
-
-        oval.setAttribute(
-            "stroke-width",
-            "1.5"
-        );
-
-
-        oval.setAttribute(
-            "stroke-opacity",
-            "0.82"
-        );
-
-
-        oval.setAttribute(
-            "transform",
-            `rotate(${angle} ${cx} ${cy})`
-        );
-
-
-        svg.appendChild(oval);
-
-    });
-
-
-    gridEl.appendChild(svg);
 
 }
 
 
 /* =====================================================
-   判断是否为直线
+   找错动画
+===================================================== */
+
+function wrongAnimation() {
+
+    selectedCells.forEach(
+        ([r,c]) => {
+
+            const cell =
+                cellEls[r][c];
+
+
+            cell.classList.remove(
+                "wrong"
+            );
+
+
+            void cell.offsetWidth;
+
+
+            cell.classList.add(
+                "wrong"
+            );
+
+
+            setTimeout(
+                () => {
+
+                    cell.classList.remove(
+                        "wrong"
+                    );
+
+                },
+                450
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   判断直线
 ===================================================== */
 
 function isStraightWordPath(
@@ -1799,8 +2274,12 @@ function isStraightWordPath(
 ) {
 
     if (
+
         !ALLOWED_SET.has(word) ||
-        [...word].length !== coords.length
+
+        [...word].length !==
+        coords.length
+
     ) {
 
         return false;
@@ -1809,12 +2288,18 @@ function isStraightWordPath(
 
 
     if (
+
         coords.some(
+
             ([r,c],i) =>
+
                 !gridData[r] ||
-                gridData[r][c] !==
-                [...word][i]
+
+                gridData[r][c]
+                !== [...word][i]
+
         )
+
     ) {
 
         return false;
@@ -1822,7 +2307,9 @@ function isStraightWordPath(
     }
 
 
-    if (coords.length === 1)
+    if (
+        coords.length === 1
+    )
         return true;
 
 
@@ -1837,9 +2324,13 @@ function isStraightWordPath(
 
 
     if (
+
         Math.abs(dr) > 1 ||
+
         Math.abs(dc) > 1 ||
+
         (dr === 0 && dc === 0)
+
     ) {
 
         return false;
@@ -1854,11 +2345,13 @@ function isStraightWordPath(
     ) {
 
         if (
+
             coords[i][0] !==
             coords[0][0] + dr * i ||
 
             coords[i][1] !==
             coords[0][1] + dc * i
+
         ) {
 
             return false;
@@ -1874,7 +2367,59 @@ function isStraightWordPath(
 
 
 /* =====================================================
-   提交正确答案
+   正确答案动画
+===================================================== */
+
+function correctAnimation(coords) {
+
+    coords.forEach(
+        ([r,c], index) => {
+
+            setTimeout(
+                () => {
+
+                    const cell =
+                        cellEls[r][c];
+
+
+                    cell.classList.remove(
+                        "correct"
+                    );
+
+
+                    void cell.offsetWidth;
+
+
+                    cell.classList.add(
+                        "correct"
+                    );
+
+
+                    setTimeout(
+                        () => {
+
+                            cell.classList.remove(
+                                "correct"
+                            );
+
+                        },
+                        500
+                    );
+
+                },
+
+                index * 35
+
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   记录正确答案
 ===================================================== */
 
 function commitFoundWord(
@@ -1886,10 +2431,14 @@ function commitFoundWord(
 
     foundSet.add(word);
 
+
     foundPaths.push(
+
         coords.map(
-            ([r,c]) => [r,c]
+            ([r,c]) =>
+                [r,c]
         )
+
     );
 
 
@@ -1904,13 +2453,30 @@ function commitFoundWord(
 
             }
 
+
             paint(r,c);
 
         }
     );
 
 
-    renderFoundPaths();
+    /*
+       找对动画
+    */
+
+    correctAnimation(
+        coords
+    );
+
+
+    /*
+       顶部 FOUND
+    */
+
+    showFoundPopup(
+        word
+    );
+
 
     renderWords();
 
@@ -1927,15 +2493,31 @@ function commitFoundWord(
     ) {
 
         tip.textContent =
-            "🎉 全部找到了！";
+            "全部找到了！";
+
 
         tip.className =
             "tip success";
+
+
+        gameScreen.classList.remove(
+            "complete"
+        );
+
+
+        void gameScreen.offsetWidth;
+
+
+        gameScreen.classList.add(
+            "complete"
+        );
+
 
     } else {
 
         tip.textContent =
             "猜对了一个！";
+
 
         tip.className =
             "tip success";
@@ -1946,18 +2528,22 @@ function commitFoundWord(
 
 
 /* =====================================================
-   点击选字确认
+   点击选择后确认
 ===================================================== */
 
 function check() {
 
-    if (!selectedCells.length) {
+    if (
+        !selectedCells.length
+    ) {
 
         tip.textContent =
             "请先点击选择文字。";
 
+
         tip.className =
             "tip";
+
 
         return;
 
@@ -1968,25 +2554,34 @@ function check() {
         selectedCells
             .map(
                 ([r,c]) =>
-                gridData[r][c]
+                    gridData[r][c]
             )
             .join("");
 
 
-    if (foundSet.has(text)) {
+    if (
+        foundSet.has(text)
+    ) {
 
         tip.textContent =
             "这个词已经猜过了！";
 
+
         tip.className =
             "tip";
 
+
         clearSelection();
+
 
         return;
 
     }
 
+
+    /*
+       找错
+    */
 
     if (
         !isStraightWordPath(
@@ -1995,13 +2590,26 @@ function check() {
         )
     ) {
 
+        wrongAnimation();
+
+
         tip.textContent =
             "不正确";
+
 
         tip.className =
             "tip";
 
-        clearSelection();
+
+        setTimeout(
+            () => {
+
+                clearSelection();
+
+            },
+            400
+        );
+
 
         return;
 
@@ -2010,11 +2618,13 @@ function check() {
 
     const coords =
         selectedCells.map(
-            ([r,c]) => [r,c]
+            ([r,c]) =>
+                [r,c]
         );
 
 
     clearSelection();
+
 
     commitFoundWord(
         text,
@@ -2025,7 +2635,7 @@ function check() {
 
 
 /* =====================================================
-   输入框确认
+   输入答案
 ===================================================== */
 
 function checkInput() {
@@ -2039,40 +2649,53 @@ function checkInput() {
         tip.textContent =
             "请输入词语。";
 
+
         tip.className =
             "tip";
 
+
         wordInput.focus();
+
 
         return;
 
     }
 
 
-    if (foundSet.has(text)) {
+    if (
+        foundSet.has(text)
+    ) {
 
         tip.textContent =
             "这个词已经猜过了！";
 
+
         tip.className =
             "tip";
 
+
         wordInput.select();
+
 
         return;
 
     }
 
 
-    if (!ALLOWED_SET.has(text)) {
+    if (
+        !ALLOWED_SET.has(text)
+    ) {
 
         tip.textContent =
             "不是有效的答案词。";
 
+
         tip.className =
             "tip";
 
+
         wordInput.select();
+
 
         return;
 
@@ -2086,12 +2709,15 @@ function checkInput() {
     if (!coords) {
 
         tip.textContent =
-            "方阵里找不到这个词的路径。";
+            "方阵里找不到这个词。";
+
 
         tip.className =
             "tip";
 
+
         wordInput.select();
+
 
         return;
 
@@ -2099,6 +2725,7 @@ function checkInput() {
 
 
     clearSelection();
+
 
     wordInput.value = "";
 
@@ -2141,14 +2768,13 @@ function resetAll() {
 
     foundWords = [];
 
-    foundSet = new Set();
+    foundSet =
+        new Set();
 
     foundPaths = [];
 
     selectedCells = [];
 
-
-    removeFoundOverlay();
 
     paintAll();
 
@@ -2161,7 +2787,9 @@ function resetAll() {
 
     tip.textContent = "";
 
-    tip.className = "tip";
+    tip.className =
+        "tip";
+
 
     wordInput.value = "";
 
@@ -2169,29 +2797,8 @@ function resetAll() {
 
 
 /* =====================================================
-   按钮事件
+   按钮
 ===================================================== */
-
-resetBtn.addEventListener(
-    "click",
-    function() {
-
-        if (
-            !confirm(
-                "确定重置所有进度吗？"
-            )
-        ) return;
-
-
-        resetAll();
-
-        flashSaveTip(
-            "✓ 已重置"
-        );
-
-    }
-);
-
 
 submitBtn.addEventListener(
     "click",
@@ -2203,9 +2810,15 @@ undoBtn.addEventListener(
     "click",
     () => {
 
-        selectedCells.pop();
+        if (
+            selectedCells.length
+        ) {
 
-        renderSelection();
+            selectedCells.pop();
+
+            renderSelection();
+
+        }
 
     }
 );
@@ -2219,7 +2832,8 @@ clearBtn.addEventListener(
 
         tip.textContent = "";
 
-        tip.className = "tip";
+        tip.className =
+            "tip";
 
     }
 );
@@ -2235,13 +2849,41 @@ wordInput.addEventListener(
     "keydown",
     e => {
 
-        if (e.key === "Enter") {
+        if (
+            e.key === "Enter"
+        ) {
 
             e.preventDefault();
 
             checkInput();
 
         }
+
+    }
+);
+
+
+resetBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !confirm(
+                "确定重置所有进度吗？"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        resetAll();
+
+
+        flashSaveTip(
+            "✓ 已重置"
+        );
 
     }
 );
@@ -2262,12 +2904,6 @@ window.addEventListener(
             resizeTimer
         );
 
-        resizeTimer =
-            setTimeout(
-                renderFoundPaths,
-                120
-            );
-
     }
 );
 
@@ -2282,8 +2918,6 @@ paintAll();
 
 renderSelection();
 
-renderFoundPaths();
-
 renderWords();
 
 updateCounter();
@@ -2297,6 +2931,7 @@ if (
     tip.textContent =
         "🎉 全部找到了！";
 
+
     tip.className =
         "tip success";
 
@@ -2306,3 +2941,4 @@ if (
 
 </body>
 </html>
+```
