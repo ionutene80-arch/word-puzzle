@@ -1,486 +1,2307 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
 <meta charset="UTF-8">
-<title>puzzle</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>书影迷城</title>
+
 <style>
-  @font-face {
+
+/* =========================
+   像素字体
+========================= */
+
+@font-face {
     font-family: "PixelFont";
     src: url("./fonts/pixel.otf") format("opentype");
 }
 
 * {
+    box-sizing: border-box;
     font-family: "PixelFont", sans-serif;
 }
-  body {
-    background: #1e1e2f;
+
+
+/* =========================
+   整体页面
+========================= */
+
+body {
+    margin: 0;
     min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            #272653 0%,
+            #15152d 45%,
+            #080814 100%
+        );
+
+    color: #fff;
+}
+
+
+/* =========================
+   开始页面
+========================= */
+
+.start-screen {
+
+    position: fixed;
+    inset: 0;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 20px;
-    font-family: "ArkPixel", sans-serif;
-    margin: 0;
-    color: #fff;
-    padding: 24px 0;
-  }
-  .grid {
-    display: grid;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(7, 7, 22, 0.45),
+            rgba(7, 7, 22, 0.88)
+        ),
+        radial-gradient(
+            circle at 50% 45%,
+            #29275a 0%,
+            #14142f 45%,
+            #05050d 100%
+        );
+
+    z-index: 9999;
+}
+
+
+/* 背景像素噪点 */
+
+.start-screen::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(130,120,255,0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(130,120,255,0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 16px 16px;
+
+    opacity: 0.5;
+}
+
+
+/* =========================
+   标题
+========================= */
+
+.title {
+
     position: relative;
-    gap: 4px 12px;
-    font-size: 1.6rem;
-    font-weight: 700;
-    user-select: none;
-    letter-spacing: 2px;
-  }
-  .grid .cell { transition: color 0.2s; text-align: center; line-height: 1.2; width: 1.45em; height: 1.45em; display:flex; align-items:center; justify-content:center; border: 2px solid transparent; border-radius: 50%; box-sizing: border-box; cursor: pointer; }
-  .grid .cell.empty { cursor: default; }
-  .grid .cell.selected { background: rgba(255,105,180,.22); border-color: #ff69b4; }
-  .found-overlay { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:2; }
-  .selection-area { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:12px; width:min(90vw,700px); }
-  #selectedWord { min-width:220px; max-width:90vw; min-height:1.5em; padding:10px 14px; border:2px solid #ff69b4; border-radius:10px; background:#2a2a40; text-align:center; color:#fff; letter-spacing:2px; overflow-wrap:anywhere; }
-  .input-area { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  input {
-    width: 220px;
-    padding: 10px 14px;
-    font-size: 1rem;
+
     text-align: center;
-    border: 2px solid #ff69b4;
-    border-radius: 10px;
-    background: #2a2a40;
-    color: #fff;
-    outline: none;
-  }
-  input::placeholder { color: #666; }
-  button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 10px;
-    background: #ff69b4;
-    color: #fff;
-    cursor: pointer;
-  }
-  button:hover { background: #ff85c8; }
-  #resetBtn { background: #444; font-size: 0.85rem; padding: 6px 14px; }
-  #resetBtn:hover { background: #666; }
-  .tip { color: #666; font-size: 0.95rem; margin: 0; }
-  .tip.success { color: #4dff88; }
-  .words-box {
-    color: #aaa;
-    font-size: 0.95rem;
-    text-align: center;
-    max-width: 700px;
-    line-height: 1.8;
-  }
-  .words-box .word {
-    display: inline-block;
-    background: #2a2a40;
-    padding: 2px 8px;
-    border-radius: 6px;
-    margin: 2px;
-    color: #ff69b4;
-  }
-  .counter {
-    color: #aaa;
-    font-size: 1.05rem;
-    letter-spacing: 2px;
-  }
-  .counter .num {
-    color: #ff69b4;
-    font-weight: 700;
-  }
-  .save-tip {
-    color: #555;
-    font-size: 0.8rem;
+
+    margin-bottom: 55px;
+
+    animation: titleAppear 1s ease forwards;
+}
+
+
+.title h1 {
+
     margin: 0;
-  }
+
+    font-size: clamp(38px, 6vw, 68px);
+
+    letter-spacing: 10px;
+
+    color: #d9d6ff;
+
+    text-shadow:
+        4px 4px 0 #302d5c,
+        0 0 20px rgba(120,110,255,0.45);
+}
+
+
+.title p {
+
+    margin-top: 18px;
+
+    font-size: 14px;
+
+    letter-spacing: 7px;
+
+    color: #7773a8;
+}
+
+
+/* =========================
+   开始按钮
+========================= */
+
+.menu {
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    animation: menuAppear 1.2s ease forwards;
+}
+
+
+.menu button {
+
+    width: 250px;
+
+    height: 58px;
+
+    padding: 0;
+
+    border: 2px solid rgba(150,145,255,0.45);
+
+    border-radius: 4px;
+
+    background: rgba(40,38,82,0.75);
+
+    color: #dedcff;
+
+    font-size: 18px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.menu button:hover {
+
+    background: rgba(85,78,150,0.75);
+
+    border-color: #aaa5ff;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 20px rgba(90,80,255,0.2);
+}
+
+
+.menu button:active {
+
+    transform: translateY(1px);
+}
+
+
+/* =========================
+   版本文字
+========================= */
+
+.version {
+
+    position: absolute;
+
+    bottom: 25px;
+
+    color: #4e4b70;
+
+    font-size: 10px;
+
+    letter-spacing: 5px;
+}
+
+
+/* =========================
+   动画
+========================= */
+
+@keyframes titleAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes menuAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================
+   游戏页面
+========================= */
+
+.game-screen {
+
+    display: none;
+
+    min-height: 100vh;
+
+    padding: 24px 0;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #292752 0%,
+            #17172f 45%,
+            #090914 100%
+        );
+}
+
+
+/* =========================
+   游戏顶部返回按钮
+========================= */
+
+.back-btn {
+
+    position: fixed;
+
+    top: 18px;
+
+    left: 18px;
+
+    padding: 7px 13px;
+
+    font-size: 13px;
+
+    border: 1px solid #55527e;
+
+    border-radius: 4px;
+
+    background: rgba(30,30,55,0.8);
+
+    color: #aaa7d8;
+
+    cursor: pointer;
+
+    z-index: 20;
+}
+
+
+.back-btn:hover {
+
+    background: #35335e;
+
+    color: white;
+}
+
+
+/* =========================
+   游戏方阵
+========================= */
+
+.grid {
+
+    display: grid;
+
+    position: relative;
+
+    gap: 4px 12px;
+
+    font-size: 1.6rem;
+
+    font-weight: 700;
+
+    user-select: none;
+
+    letter-spacing: 2px;
+}
+
+
+.grid .cell {
+
+    transition: color 0.2s;
+
+    text-align: center;
+
+    line-height: 1.2;
+
+    width: 1.45em;
+
+    height: 1.45em;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 2px solid transparent;
+
+    border-radius: 50%;
+
+    box-sizing: border-box;
+
+    cursor: pointer;
+}
+
+
+.grid .cell.empty {
+
+    cursor: default;
+}
+
+
+.grid .cell.selected {
+
+    background: rgba(143,216,255,0.22);
+
+    border-color: #8fd8ff;
+}
+
+
+/* =========================
+   正确答案圈
+========================= */
+
+.found-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: visible;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   选择区域
+========================= */
+
+.selection-area {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    width: min(90vw,700px);
+}
+
+
+#selectedWord {
+
+    min-width: 220px;
+
+    max-width: 90vw;
+
+    min-height: 1.5em;
+
+    padding: 10px 14px;
+
+    border: 2px solid #8fd8ff;
+
+    border-radius: 6px;
+
+    background: #202039;
+
+    text-align: center;
+
+    color: #fff;
+
+    letter-spacing: 2px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================
+   输入区域
+========================= */
+
+.input-area {
+
+    display: flex;
+
+    gap: 12px;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+}
+
+
+input {
+
+    width: 220px;
+
+    padding: 10px 14px;
+
+    font-size: 1rem;
+
+    text-align: center;
+
+    border: 2px solid #8fd8ff;
+
+    border-radius: 6px;
+
+    background: #202039;
+
+    color: #fff;
+
+    outline: none;
+}
+
+
+input::placeholder {
+
+    color: #666;
+}
+
+
+/* =========================
+   游戏按钮
+========================= */
+
+.game-screen button {
+
+    padding: 10px 20px;
+
+    font-size: 1rem;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #638fc2;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.game-screen button:hover {
+
+    background: #79a8df;
+}
+
+
+#undoBtn {
+
+    background: #555 !important;
+}
+
+
+#clearBtn {
+
+    background: #444 !important;
+}
+
+
+#resetBtn {
+
+    background: #444;
+
+    font-size: 0.85rem;
+
+    padding: 6px 14px;
+}
+
+
+#resetBtn:hover {
+
+    background: #666;
+}
+
+
+/* =========================
+   提示文字
+========================= */
+
+.tip {
+
+    color: #777;
+
+    font-size: 0.95rem;
+
+    margin: 0;
+}
+
+
+.tip.success {
+
+    color: #70e6a0;
+}
+
+
+/* =========================
+   已找到词语
+========================= */
+
+.words-box {
+
+    color: #aaa;
+
+    font-size: 0.95rem;
+
+    text-align: center;
+
+    max-width: 700px;
+
+    line-height: 1.8;
+}
+
+
+.words-box .word {
+
+    display: inline-block;
+
+    background: #24243d;
+
+    padding: 2px 8px;
+
+    border-radius: 4px;
+
+    margin: 2px;
+
+    color: #8fd8ff;
+}
+
+
+/* =========================
+   计数
+========================= */
+
+.counter {
+
+    color: #aaa;
+
+    font-size: 1.05rem;
+
+    letter-spacing: 2px;
+}
+
+
+.counter .num {
+
+    color: #8fd8ff;
+
+    font-weight: 700;
+}
+
+
+.save-tip {
+
+    color: #555;
+
+    font-size: 0.8rem;
+
+    margin: 0;
+}
+
+
+/* =========================
+   手机适配
+========================= */
+
+@media (max-width: 600px) {
+
+    .title h1 {
+
+        font-size: 34px;
+
+        letter-spacing: 5px;
+    }
+
+    .grid {
+
+        font-size: 1.15rem;
+
+        gap: 3px 5px;
+    }
+
+    .selection-area {
+
+        width: 95vw;
+    }
+}
+
 </style>
 </head>
+
+
 <body>
 
-  <div class="grid" id="grid"></div>
 
-  <p class="tip">点击上方文字选字，或者直接在下面输入词语。</p>
-  <div class="selection-area">
-    <div id="selectedWord" aria-live="polite">（点击文字开始）</div>
-    <button id="submitBtn">确认</button>
-    <button id="undoBtn" type="button" style="background:#555">撤销一个字</button>
-    <button id="clearBtn" type="button" style="background:#444">清空</button>
-  </div>
+<!-- =====================================================
+     开始页面
+===================================================== -->
 
-  <!-- 新增：打字输入区 -->
-  <div class="input-area">
-    <input id="wordInput" type="text" placeholder="输入词语，回车或点右侧确认" autocomplete="off" />
-    <button id="inputSubmitBtn" type="button">输入确认</button>
-  </div>
+<div id="startScreen" class="start-screen">
 
-  <p class="counter">
-    已猜出 <span class="num" id="foundCount">0</span> / <span class="num" id="totalCount">49</span>
-  </p>
+    <div class="title">
 
-  <p class="tip" id="tip"></p>
+        <h1>书 · 影 迷 城</h1>
 
-  <p class="tip">已输入的词：</p>
-  <div class="words-box" id="wordsBox">（空）</div>
+        <p>FIND THE TITLE</p>
 
-  <button id="resetBtn">重置进度</button>
-  <p class="save-tip" id="saveTip">进度会自动保存</p>
+    </div>
+
+
+    <div class="menu">
+
+        <button onclick="startGame()">
+            ▶ 开始游戏
+        </button>
+
+        <button onclick="showRules()">
+            游戏规则
+        </button>
+
+    </div>
+
+
+    <div class="version">
+        PIXEL EDITION
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     游戏页面
+===================================================== -->
+
+<div id="gameScreen" class="game-screen">
+
+
+    <button class="back-btn" onclick="backToStart()">
+        ← 返回
+    </button>
+
+
+    <div class="grid" id="grid"></div>
+
+
+    <p class="tip">
+        点击上方文字选字，或者直接在下面输入词语。
+    </p>
+
+
+    <div class="selection-area">
+
+        <div id="selectedWord" aria-live="polite">
+            （点击文字开始）
+        </div>
+
+        <button id="submitBtn">
+            确认
+        </button>
+
+        <button id="undoBtn" type="button">
+            撤销一个字
+        </button>
+
+        <button id="clearBtn" type="button">
+            清空
+        </button>
+
+    </div>
+
+
+    <!-- 输入框 -->
+
+    <div class="input-area">
+
+        <input
+            id="wordInput"
+            type="text"
+            placeholder="输入词语，回车确认"
+            autocomplete="off"
+        />
+
+        <button id="inputSubmitBtn" type="button">
+            输入确认
+        </button>
+
+    </div>
+
+
+    <p class="counter">
+
+        已猜出
+
+        <span class="num" id="foundCount">
+            0
+        </span>
+
+        /
+
+        <span class="num" id="totalCount">
+            49
+        </span>
+
+    </p>
+
+
+    <p class="tip" id="tip"></p>
+
+
+    <p class="tip">
+        已输入的词：
+    </p>
+
+
+    <div class="words-box" id="wordsBox">
+        （空）
+    </div>
+
+
+    <button id="resetBtn">
+        重置进度
+    </button>
+
+
+    <p class="save-tip" id="saveTip">
+        进度会自动保存
+    </p>
+
+</div>
+
+
 
 <script>
-  const GRID_LINES = ["伊见人情年芳声智城雪心老内环超鸟人","罚偏感样时泳者之心灵奇旅友游脱能之","爱与花束般的恋爱乐之城缘红记台戏陆","智慢罪奥维尔号像恩音翠石日假马罗暗","店傲赎救的克申肖指伯翡主公灵幽日夏","论饭鱼汉尼拔羊的环德公八犬忠里欧洛","席象大坦小小狮子王小妇人佳世乱写特","新红泰斯猪丹麦女孩姐孩小笨迹奇脑的","灯猪里肯佩悉的烧冬男天空之城头低网","追莫戈兰奇达怪燃迹春光乍泄围俗怪族","忆迪尔弗拉多布奇的城光月球小鬼当家","似里博普诺兰虻班物格光升说她对有偷","水阿穿婆阿奥牛动格语棋王之剧喜奶小"];
-  const INIT_LEVELS = [[0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0],[1,1,0,0,0,1,1,2,2,1,1,1,1,0,0,0,0],[0,2,1,1,1,1,1,2,2,1,2,0,0,1,0,0,0],[0,1,1,1,1,1,2,1,1,1,1,0,1,1,1,1,0],[1,1,1,1,1,2,1,3,1,1,1,2,1,2,2,1,2],[0,1,1,1,2,1,1,1,1,1,2,1,1,1,0,0,1],[0,0,2,2,1,1,1,3,4,5,1,2,1,1,1,0,1],[0,1,1,2,1,1,1,3,1,2,2,1,1,1,1,0,1],[0,1,0,1,2,1,1,1,1,1,1,1,1,2,0,1,1],[0,0,0,1,1,3,1,2,1,1,2,1,1,1,1,0,0],[0,0,0,1,1,1,1,2,0,0,1,0,0,2,1,1,1],[0,0,0,1,1,1,1,0,1,0,1,0,1,0,0,0,0],[0,0,1,0,0,0,1,0,0,1,0,1,1,1,1,0,0]];
-  const ALLOWED_WORDS = ["天空之城","小妇人","狮子王","小王子","丹麦女孩","牛虻","穿普拉达的女王","指环王","爱乐之城","心灵奇旅","老友记","奇迹笨小孩","小姐","伯德小姐","燃冬","小羊肖恩","肖申克的救赎","汉尼拔","大鱼","奥维尔号","小公主","音乐之声","泰坦尼克号","小猪佩奇","弗兰肯斯坦","布达佩斯大饭店","奇迹男孩","燃烧女子的肖像","悉达多","怪奇物语","春光乍泄","光光光","小鬼当家","夏日幽灵","忠犬八公","泳者之心","花束般的恋爱","罪与罚","幽灵公主","诺兰","喜剧之王","红猪","乱世佳人","围城","低俗小说","傲慢与偏见","翡翠城","罗马假日","夏洛特的网"];
-  const ALLOWED_SET = new Set(ALLOWED_WORDS); // 加速查找
 
-  const colors = ['#ff4d4d', '#ff9f43', '#ffd93d', '#4dff88', '#4dabff', '#9b4dff'];
-  const SAVE_KEY = 'puzzle_save_v3_' + ALLOWED_WORDS.join('_').length;
+/* =====================================================
+   开始页面控制
+===================================================== */
 
-  const gridData = GRID_LINES.map(line => [...line]);
-  const ROWS = gridData.length;
-  const COLS = Math.max(...gridData.map(r => r.length));
+function startGame() {
 
-  let currentLevel = INIT_LEVELS.map(row => [...row]);
-  let foundWords = [];
-  let foundSet = new Set();
-  let selectedCells = [];
-  let foundPaths = [];
+    document.getElementById("startScreen").style.display = "none";
 
-  function loadSave() {
+    document.getElementById("gameScreen").style.display = "flex";
+
+}
+
+
+function backToStart() {
+
+    document.getElementById("gameScreen").style.display = "none";
+
+    document.getElementById("startScreen").style.display = "flex";
+
+}
+
+
+function showRules() {
+
+    alert(
+`游戏规则
+
+1. 点击方阵中的文字选择汉字。
+
+2. 组成一个完整的电影名或书名。
+
+3. 点击“确认”提交答案。
+
+4. 猜对后，会用淡蓝色半透明的圈标记出来。
+
+5. 也可以直接在输入框输入答案。
+
+6. 找出全部答案即可通关！
+
+祝你游戏愉快！`
+    );
+
+}
+
+
+/* =====================================================
+   游戏数据
+===================================================== */
+
+const GRID_LINES = [
+"伊见人情年芳声智城雪心老内环超鸟人",
+"罚偏感样时泳者之心灵奇旅友游脱能之",
+"爱与花束般的恋爱乐之城缘红记台戏陆",
+"智慢罪奥维尔号像恩音翠石日假马罗暗",
+"店傲赎救的克申肖指伯翡主公灵幽日夏",
+"论饭鱼汉尼拔羊的环德公八犬忠里欧洛",
+"席象大坦小小狮子王小妇人佳世乱写特",
+"新红泰斯猪丹麦女孩姐孩小笨迹奇脑的",
+"灯猪里肯佩悉的烧冬男天空之城头低网",
+"追莫戈兰奇达怪燃迹春光乍泄围俗怪族",
+"忆迪尔弗拉多布奇的城光月球小鬼当家",
+"似里博普诺兰虻班物格光升说她对有偷",
+"水阿穿婆阿奥牛动格语棋王之剧喜奶小"
+];
+
+
+const INIT_LEVELS = [
+[0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0],
+[1,1,0,0,0,1,1,2,2,1,1,1,1,0,0,0,0],
+[0,2,1,1,1,1,1,2,2,1,2,0,0,1,0,0,0],
+[0,1,1,1,1,1,2,1,1,1,1,0,1,1,1,1,0],
+[1,1,1,1,1,2,1,3,1,1,1,2,1,2,2,1,2],
+[0,1,1,1,2,1,1,1,1,1,2,1,1,1,0,0,1],
+[0,0,2,2,1,1,1,3,4,5,1,2,1,1,1,0,1],
+[0,1,1,2,1,1,1,3,1,2,2,1,1,1,1,0,1],
+[0,1,0,1,2,1,1,1,1,1,1,1,1,2,0,1,1],
+[0,0,0,1,1,3,1,2,1,1,2,1,1,1,1,0,0],
+[0,0,0,1,1,1,1,2,0,0,1,0,0,2,1,1,1],
+[0,0,0,1,1,1,1,0,1,0,1,0,1,0,0,0],
+[0,0,1,0,0,0,1,0,0,1,0,1,1,1,1,0,0]
+];
+
+
+const ALLOWED_WORDS = [
+"天空之城",
+"小妇人",
+"狮子王",
+"小王子",
+"丹麦女孩",
+"牛虻",
+"穿普拉达的女王",
+"指环王",
+"爱乐之城",
+"心灵奇旅",
+"老友记",
+"奇迹笨小孩",
+"小姐",
+"伯德小姐",
+"燃冬",
+"小羊肖恩",
+"肖申克的救赎",
+"汉尼拔",
+"大鱼",
+"奥维尔号",
+"小公主",
+"音乐之声",
+"泰坦尼克号",
+"小猪佩奇",
+"弗兰肯斯坦",
+"布达佩斯大饭店",
+"奇迹男孩",
+"燃烧女子的肖像",
+"悉达多",
+"怪奇物语",
+"春光乍泄",
+"光光光",
+"小鬼当家",
+"夏日幽灵",
+"忠犬八公",
+"泳者之心",
+"花束般的恋爱",
+"罪与罚",
+"幽灵公主",
+"诺兰",
+"喜剧之王",
+"红猪",
+"乱世佳人",
+"围城",
+"低俗小说",
+"傲慢与偏见",
+"翡翠城",
+"罗马假日",
+"夏洛特的网"
+];
+
+
+const ALLOWED_SET = new Set(ALLOWED_WORDS);
+
+
+const colors = [
+"#ff4d4d",
+"#ff9f43",
+"#ffd93d",
+"#4dff88",
+"#4dabff",
+"#9b4dff"
+];
+
+
+const SAVE_KEY =
+"puzzle_save_v3_" +
+ALLOWED_WORDS.join("_").length;
+
+
+const gridData =
+GRID_LINES.map(line => [...line]);
+
+
+const ROWS =
+gridData.length;
+
+
+const COLS =
+Math.max(...gridData.map(r => r.length));
+
+
+let currentLevel =
+INIT_LEVELS.map(row => [...row]);
+
+
+let foundWords = [];
+
+
+let foundSet = new Set();
+
+
+let selectedCells = [];
+
+
+let foundPaths = [];
+
+
+/* =====================================================
+   存档
+===================================================== */
+
+function loadSave() {
+
     try {
-      const raw = localStorage.getItem(SAVE_KEY);
-      if (!raw) return;
-      const data = JSON.parse(raw);
-      if (!data.currentLevel || data.currentLevel.length !== ROWS) return;
-      currentLevel = data.currentLevel;
-      foundWords = data.foundWords || [];
-      foundSet = new Set(foundWords);
-      foundPaths = Array.isArray(data.foundPaths) ? data.foundPaths : [];
-    } catch (e) {
-      console.warn('读取存档失败', e);
-    }
-  }
 
-  function save() {
+        const raw =
+            localStorage.getItem(SAVE_KEY);
+
+        if (!raw) return;
+
+        const data =
+            JSON.parse(raw);
+
+        if (
+            !data.currentLevel ||
+            data.currentLevel.length !== ROWS
+        ) return;
+
+        currentLevel =
+            data.currentLevel;
+
+        foundWords =
+            data.foundWords || [];
+
+        foundSet =
+            new Set(foundWords);
+
+        foundPaths =
+            Array.isArray(data.foundPaths)
+                ? data.foundPaths
+                : [];
+
+    } catch (e) {
+
+        console.warn("读取存档失败", e);
+
+    }
+
+}
+
+
+function save() {
+
     try {
-      localStorage.setItem(SAVE_KEY, JSON.stringify({
-        currentLevel, foundWords, foundPaths
-      }));
+
+        localStorage.setItem(
+            SAVE_KEY,
+            JSON.stringify({
+                currentLevel,
+                foundWords,
+                foundPaths
+            })
+        );
+
     } catch (e) {
-      console.warn('保存失败', e);
+
+        console.warn("保存失败", e);
+
     }
-  }
 
-  const gridEl = document.getElementById('grid');
-  gridEl.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
+}
 
-  const cellEls = [];
-  for (let r = 0; r < ROWS; r++) {
+
+/* =====================================================
+   创建方阵
+===================================================== */
+
+const gridEl =
+document.getElementById("grid");
+
+
+gridEl.style.gridTemplateColumns =
+`repeat(${COLS}, 1fr)`;
+
+
+const cellEls = [];
+
+
+for (
+    let r = 0;
+    r < ROWS;
+    r++
+) {
+
     cellEls[r] = [];
-    for (let c = 0; c < COLS; c++) {
-      const ch = gridData[r][c] || '';
-      const cell = document.createElement('div');
-      cell.className = 'cell' + (ch ? '' : ' empty');
-      cell.textContent = ch;
-      if (ch) {
-        cell.setAttribute('role', 'button');
-        cell.setAttribute('tabindex', '0');
-        cell.setAttribute('aria-label', `第${r+1}行第${c+1}列，${ch}`);
-        cell.addEventListener('click', () => selectCell(r, c));
-        cell.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCell(r, c); } });
-      }
-      gridEl.appendChild(cell);
-      cellEls[r][c] = cell;
-    }
-  }
 
-  function paint(r, c) {
-    const lv = currentLevel[r][c];
-    const cell = cellEls[r][c];
-    if (!cell) return;
-    if (lv <= 0) {
-      cell.style.color = '#ffffff';
-    } else {
-      cell.style.color = colors[(lv - 1) % colors.length];
-    }
-  }
+    for (
+        let c = 0;
+        c < COLS;
+        c++
+    ) {
 
-  function paintAll() {
-    for (let r = 0; r < ROWS; r++)
-      for (let c = 0; c < COLS; c++)
-        paint(r, c);
-  }
+        const ch =
+            gridData[r][c] || "";
 
-  // 在方阵里查找词语路径（八方向扫描，返回第一条匹配）
-  function findWord(word) {
-    if (!word) return null;
-    const chars = [...word];
-    const len = chars.length;
-    const dirs = [
-      [0, 1], [0, -1], [1, 0], [-1, 0],
-      [1, 1], [1, -1], [-1, 1], [-1, -1]
-    ];
-    for (let r = 0; r < ROWS; r++) {
-      for (let c = 0; c < COLS; c++) {
-        if (gridData[r][c] !== chars[0]) continue;
-        for (const [dr, dc] of dirs) {
-          let ok = true;
-          const coords = [];
-          for (let k = 0; k < len; k++) {
-            const nr = r + dr * k;
-            const nc = c + dc * k;
-            if (nr < 0 || nr >= ROWS || nc < 0 || nc >= COLS) { ok = false; break; }
-            if (gridData[nr][nc] !== chars[k]) { ok = false; break; }
-            coords.push([nr, nc]);
-          }
-          if (ok) return coords;
+        const cell =
+            document.createElement("div");
+
+        cell.className =
+            "cell" +
+            (ch ? "" : " empty");
+
+        cell.textContent =
+            ch;
+
+        if (ch) {
+
+            cell.setAttribute(
+                "role",
+                "button"
+            );
+
+            cell.setAttribute(
+                "tabindex",
+                "0"
+            );
+
+            cell.setAttribute(
+                "aria-label",
+                `第${r+1}行第${c+1}列，${ch}`
+            );
+
+            cell.addEventListener(
+                "click",
+                () => selectCell(r,c)
+            );
+
+            cell.addEventListener(
+                "keydown",
+                e => {
+
+                    if (
+                        e.key === "Enter" ||
+                        e.key === " "
+                    ) {
+
+                        e.preventDefault();
+
+                        selectCell(r,c);
+
+                    }
+
+                }
+            );
+
         }
-      }
+
+        gridEl.appendChild(cell);
+
+        cellEls[r][c] = cell;
+
     }
-    return null;
-  }
 
-  const selectedWordEl = document.getElementById('selectedWord');
-  const submitBtn = document.getElementById('submitBtn');
-  const undoBtn = document.getElementById('undoBtn');
-  const clearBtn = document.getElementById('clearBtn');
-  const tip = document.getElementById('tip');
-  const foundCountEl = document.getElementById('foundCount');
-  const wordsBox = document.getElementById('wordsBox');
-  const resetBtn = document.getElementById('resetBtn');
-  const saveTip = document.getElementById('saveTip');
-  const wordInput = document.getElementById('wordInput');
-  const inputSubmitBtn = document.getElementById('inputSubmitBtn');
+}
 
-  document.getElementById('totalCount').textContent = ALLOWED_WORDS.length;
 
-  function renderWords() {
-    if (foundWords.length === 0) {
-      wordsBox.textContent = '（空）';
-      return;
-    }
-    wordsBox.innerHTML = foundWords
-      .map(w => `<span class="word">${w}</span>`)
-      .join('');
-  }
+/* =====================================================
+   颜色
+===================================================== */
 
-  function updateCounter() {
-    foundCountEl.textContent = foundWords.length;
-  }
+function paint(r,c) {
 
-  function flashSaveTip(msg) {
-    saveTip.textContent = msg || '✓ 已保存';
-    saveTip.style.color = '#4dff88';
-    clearTimeout(flashSaveTip._t);
-    flashSaveTip._t = setTimeout(() => {
-      saveTip.textContent = '进度会自动保存';
-      saveTip.style.color = '#555';
-    }, 1000);
-  }
+    const lv =
+        currentLevel[r][c];
 
-  function renderSelection() {
-    selectedWordEl.textContent = selectedCells.length ? selectedCells.map(([r,c]) => gridData[r][c]).join('') : '（点击文字开始）';
-    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) cellEls[r][c].classList.toggle('selected', selectedCells.some(([rr,cc]) => rr===r && cc===c));
-  }
+    const cell =
+        cellEls[r][c];
 
-  function selectCell(r, c) {
-    if (!gridData[r][c]) return;
-    const idx = selectedCells.findIndex(([rr,cc]) => rr===r && cc===c);
-    if (idx >= 0) selectedCells.splice(idx, 1);
-    else selectedCells.push([r,c]);
-    renderSelection();
-    tip.textContent = '';
-    tip.className = 'tip';
-  }
+    if (!cell) return;
 
-  function removeFoundOverlay() {
-    const oldOverlay = gridEl.querySelector('.found-overlay');
-    if (oldOverlay) oldOverlay.remove();
-  }
+    if (lv <= 0) {
 
-  function renderFoundPaths() {
-    removeFoundOverlay();
-    if (!foundPaths.length) return;
+        cell.style.color =
+            "#ffffff";
 
-    const rect = gridEl.getBoundingClientRect();
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('class', 'found-overlay');
-    svg.setAttribute('viewBox', `0 0 ${gridEl.clientWidth} ${gridEl.clientHeight}`);
-    svg.setAttribute('preserveAspectRatio', 'none');
-
-    foundPaths.forEach((path) => {
-      if (!path || !path.length) return;
-      const first = cellEls[path[0][0]] && cellEls[path[0][0]][path[0][1]];
-      const lastCoord = path[path.length - 1];
-      const last = cellEls[lastCoord[0]] && cellEls[lastCoord[0]][lastCoord[1]];
-      if (!first || !last) return;
-      const a = first.getBoundingClientRect(), b = last.getBoundingClientRect();
-      const x1 = a.left + a.width / 2 - rect.left;
-      const y1 = a.top + a.height / 2 - rect.top;
-      const x2 = b.left + b.width / 2 - rect.left;
-      const y2 = b.top + b.height / 2 - rect.top;
-      const cx = (x1 + x2) / 2, cy = (y1 + y2) / 2;
-      const distance = Math.hypot(x2 - x1, y2 - y1);
-      const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
-      const oval = document.createElementNS(svgNS, 'ellipse');
-      oval.setAttribute('cx', cx);
-      oval.setAttribute('cy', cy);
-      oval.setAttribute('rx', Math.max(distance / 2 + a.width * 0.62, a.width * 0.72));
-      oval.setAttribute('ry', Math.max(a.height * 0.64, 13));
-      oval.setAttribute('fill', '#8fd8ff');
-      oval.setAttribute('fill-opacity', '0.32');
-      oval.setAttribute('stroke', '#8fd8ff');
-      oval.setAttribute('stroke-width', '1.5');
-      oval.setAttribute('stroke-opacity', '0.82');
-      oval.setAttribute('transform', `rotate(${angle} ${cx} ${cy})`);
-      svg.appendChild(oval);
-    });
-    gridEl.appendChild(svg);
-  }
-
-  function isStraightWordPath(word, coords) {
-    if (!ALLOWED_SET.has(word) || [...word].length !== coords.length) return false;
-    if (coords.some(([r,c], i) => !gridData[r] || gridData[r][c] !== [...word][i])) return false;
-    if (coords.length === 1) return true;
-    const dr = coords[1][0] - coords[0][0], dc = coords[1][1] - coords[0][1];
-    if (Math.abs(dr) > 1 || Math.abs(dc) > 1 || (dr === 0 && dc === 0)) return false;
-    for (let i=1; i<coords.length; i++) {
-      if (coords[i][0] !== coords[0][0] + dr*i || coords[i][1] !== coords[0][1] + dc*i) return false;
-    }
-    return true;
-  }
-
-  function clearSelection() { selectedCells = []; renderSelection(); }
-
-  // 统一的"记下猜对的词"逻辑（点击和输入共用）
-  function commitFoundWord(word, coords) {
-    foundWords.push(word);
-    foundSet.add(word);
-    foundPaths.push(coords.map(([r,c]) => [r,c]));
-    coords.forEach(([r,c]) => {
-      if (currentLevel[r][c] > 0) currentLevel[r][c]--;
-      paint(r,c);
-    });
-    renderFoundPaths();
-    renderWords();
-    updateCounter();
-    save();
-    flashSaveTip();
-    if (foundWords.length === ALLOWED_WORDS.length) {
-      tip.textContent = '🎉 全部找到了！';
-      tip.className = 'tip success';
     } else {
-      tip.textContent = '猜对了一个！';
-      tip.className = 'tip success';
-    }
-  }
 
-  // 方式一：点击选字后确认
-  function check() {
-    if (!selectedCells.length) {
-      tip.textContent = '请先点击选择文字。'; tip.className = 'tip'; return;
-    }
-    const text = selectedCells.map(([r,c]) => gridData[r][c]).join('');
-    if (foundSet.has(text)) {
-      tip.textContent = '这个词已经猜过了！'; tip.className = 'tip'; clearSelection(); return;
-    }
-    if (!isStraightWordPath(text, selectedCells)) {
-      tip.textContent = '不正确'; tip.className = 'tip'; clearSelection(); return;
-    }
-    const coords = selectedCells.map(([r,c]) => [r,c]);
-    clearSelection();
-    commitFoundWord(text, coords);
-  }
+        cell.style.color =
+            colors[
+                (lv - 1) %
+                colors.length
+            ];
 
-  // 方式二：打字输入
-  function checkInput() {
-    const text = wordInput.value.trim();
-    if (!text) {
-      tip.textContent = '请输入词语。'; tip.className = 'tip';
-      wordInput.focus();
-      return;
     }
-    if (foundSet.has(text)) {
-      tip.textContent = '这个词已经猜过了！'; tip.className = 'tip';
-      wordInput.select();
-      return;
-    }
-    if (!ALLOWED_SET.has(text)) {
-      tip.textContent = '不是有效的答案词。'; tip.className = 'tip';
-      wordInput.select();
-      return;
-    }
-    const coords = findWord(text);
-    if (!coords) {
-      tip.textContent = '方阵里找不到这个词的路径。'; tip.className = 'tip';
-      wordInput.select();
-      return;
-    }
-    // 顺手清掉选字区的残留
-    clearSelection();
-    wordInput.value = '';
-    commitFoundWord(text, coords);
-    wordInput.focus();
-  }
 
-  function resetAll() {
-    try { localStorage.removeItem(SAVE_KEY); } catch (e) { console.warn(e); }
+}
 
-    currentLevel = INIT_LEVELS.map(row => [...row]);
-    foundWords = [];
-    foundSet = new Set();
-    foundPaths = [];
+
+function paintAll() {
+
+    for (
+        let r = 0;
+        r < ROWS;
+        r++
+    ) {
+
+        for (
+            let c = 0;
+            c < COLS;
+            c++
+        ) {
+
+            paint(r,c);
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   查找答案
+===================================================== */
+
+function findWord(word) {
+
+    if (!word) return null;
+
+    const chars = [...word];
+
+    const len =
+        chars.length;
+
+    const dirs = [
+        [0,1],
+        [0,-1],
+        [1,0],
+        [-1,0],
+        [1,1],
+        [1,-1],
+        [-1,1],
+        [-1,-1]
+    ];
+
+
+    for (
+        let r = 0;
+        r < ROWS;
+        r++
+    ) {
+
+        for (
+            let c = 0;
+            c < COLS;
+            c++
+        ) {
+
+            if (
+                gridData[r][c] !==
+                chars[0]
+            ) continue;
+
+
+            for (const [dr,dc] of dirs) {
+
+                let ok = true;
+
+                const coords = [];
+
+
+                for (
+                    let k = 0;
+                    k < len;
+                    k++
+                ) {
+
+                    const nr =
+                        r + dr * k;
+
+                    const nc =
+                        c + dc * k;
+
+
+                    if (
+                        nr < 0 ||
+                        nr >= ROWS ||
+                        nc < 0 ||
+                        nc >= COLS
+                    ) {
+
+                        ok = false;
+
+                        break;
+
+                    }
+
+
+                    if (
+                        gridData[nr][nc] !==
+                        chars[k]
+                    ) {
+
+                        ok = false;
+
+                        break;
+
+                    }
+
+
+                    coords.push([
+                        nr,
+                        nc
+                    ]);
+
+                }
+
+
+                if (ok)
+                    return coords;
+
+            }
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   页面元素
+===================================================== */
+
+const selectedWordEl =
+document.getElementById(
+    "selectedWord"
+);
+
+
+const submitBtn =
+document.getElementById(
+    "submitBtn"
+);
+
+
+const undoBtn =
+document.getElementById(
+    "undoBtn"
+);
+
+
+const clearBtn =
+document.getElementById(
+    "clearBtn"
+);
+
+
+const tip =
+document.getElementById(
+    "tip"
+);
+
+
+const foundCountEl =
+document.getElementById(
+    "foundCount"
+);
+
+
+const wordsBox =
+document.getElementById(
+    "wordsBox"
+);
+
+
+const resetBtn =
+document.getElementById(
+    "resetBtn"
+);
+
+
+const saveTip =
+document.getElementById(
+    "saveTip"
+);
+
+
+const wordInput =
+document.getElementById(
+    "wordInput"
+);
+
+
+const inputSubmitBtn =
+document.getElementById(
+    "inputSubmitBtn"
+);
+
+
+document.getElementById(
+    "totalCount"
+).textContent =
+ALLOWED_WORDS.length;
+
+
+/* =====================================================
+   已找到词语
+===================================================== */
+
+function renderWords() {
+
+    if (foundWords.length === 0) {
+
+        wordsBox.textContent =
+            "（空）";
+
+        return;
+
+    }
+
+
+    wordsBox.innerHTML =
+        foundWords
+            .map(
+                w =>
+                `<span class="word">${w}</span>`
+            )
+            .join("");
+
+}
+
+
+function updateCounter() {
+
+    foundCountEl.textContent =
+        foundWords.length;
+
+}
+
+
+function flashSaveTip(msg) {
+
+    saveTip.textContent =
+        msg || "✓ 已保存";
+
+    saveTip.style.color =
+        "#70e6a0";
+
+    clearTimeout(
+        flashSaveTip._t
+    );
+
+    flashSaveTip._t =
+        setTimeout(
+            () => {
+
+                saveTip.textContent =
+                    "进度会自动保存";
+
+                saveTip.style.color =
+                    "#555";
+
+            },
+            1000
+        );
+
+}
+
+
+/* =====================================================
+   选择文字
+===================================================== */
+
+function renderSelection() {
+
+    selectedWordEl.textContent =
+        selectedCells.length
+            ? selectedCells
+                .map(
+                    ([r,c]) =>
+                    gridData[r][c]
+                )
+                .join("")
+            : "（点击文字开始）";
+
+
+    for (
+        let r = 0;
+        r < ROWS;
+        r++
+    ) {
+
+        for (
+            let c = 0;
+            c < COLS;
+            c++
+        ) {
+
+            cellEls[r][c]
+                .classList
+                .toggle(
+                    "selected",
+                    selectedCells.some(
+                        ([rr,cc]) =>
+                            rr === r &&
+                            cc === c
+                    )
+                );
+
+        }
+
+    }
+
+}
+
+
+function selectCell(r,c) {
+
+    if (!gridData[r][c])
+        return;
+
+
+    const idx =
+        selectedCells.findIndex(
+            ([rr,cc]) =>
+                rr === r &&
+                cc === c
+        );
+
+
+    if (idx >= 0) {
+
+        selectedCells.splice(
+            idx,
+            1
+        );
+
+    } else {
+
+        selectedCells.push([
+            r,
+            c
+        ]);
+
+    }
+
+
+    renderSelection();
+
+    tip.textContent = "";
+
+    tip.className = "tip";
+
+}
+
+
+function clearSelection() {
+
     selectedCells = [];
 
-    removeFoundOverlay();
-    paintAll();
     renderSelection();
+
+}
+
+
+/* =====================================================
+   正确答案圈
+===================================================== */
+
+function removeFoundOverlay() {
+
+    const oldOverlay =
+        gridEl.querySelector(
+            ".found-overlay"
+        );
+
+    if (oldOverlay)
+        oldOverlay.remove();
+
+}
+
+
+function renderFoundPaths() {
+
+    removeFoundOverlay();
+
+    if (!foundPaths.length)
+        return;
+
+
+    const rect =
+        gridEl.getBoundingClientRect();
+
+
+    const svgNS =
+        "http://www.w3.org/2000/svg";
+
+
+    const svg =
+        document.createElementNS(
+            svgNS,
+            "svg"
+        );
+
+
+    svg.setAttribute(
+        "class",
+        "found-overlay"
+    );
+
+
+    svg.setAttribute(
+        "viewBox",
+        `0 0 ${gridEl.clientWidth} ${gridEl.clientHeight}`
+    );
+
+
+    svg.setAttribute(
+        "preserveAspectRatio",
+        "none"
+    );
+
+
+    foundPaths.forEach(path => {
+
+        if (!path || !path.length)
+            return;
+
+
+        const first =
+            cellEls[path[0][0]] &&
+            cellEls[path[0][0]][path[0][1]];
+
+
+        const lastCoord =
+            path[path.length - 1];
+
+
+        const last =
+            cellEls[lastCoord[0]] &&
+            cellEls[lastCoord[0]][lastCoord[1]];
+
+
+        if (!first || !last)
+            return;
+
+
+        const a =
+            first.getBoundingClientRect();
+
+
+        const b =
+            last.getBoundingClientRect();
+
+
+        const x1 =
+            a.left +
+            a.width / 2 -
+            rect.left;
+
+
+        const y1 =
+            a.top +
+            a.height / 2 -
+            rect.top;
+
+
+        const x2 =
+            b.left +
+            b.width / 2 -
+            rect.left;
+
+
+        const y2 =
+            b.top +
+            b.height / 2 -
+            rect.top;
+
+
+        const cx =
+            (x1 + x2) / 2;
+
+
+        const cy =
+            (y1 + y2) / 2;
+
+
+        const distance =
+            Math.hypot(
+                x2 - x1,
+                y2 - y1
+            );
+
+
+        const angle =
+            Math.atan2(
+                y2 - y1,
+                x2 - x1
+            ) * 180 / Math.PI;
+
+
+        const oval =
+            document.createElementNS(
+                svgNS,
+                "ellipse"
+            );
+
+
+        oval.setAttribute(
+            "cx",
+            cx
+        );
+
+
+        oval.setAttribute(
+            "cy",
+            cy
+        );
+
+
+        oval.setAttribute(
+            "rx",
+            Math.max(
+                distance / 2 +
+                a.width * 0.62,
+                a.width * 0.72
+            )
+        );
+
+
+        oval.setAttribute(
+            "ry",
+            Math.max(
+                a.height * 0.64,
+                13
+            )
+        );
+
+
+        oval.setAttribute(
+            "fill",
+            "#8fd8ff"
+        );
+
+
+        oval.setAttribute(
+            "fill-opacity",
+            "0.32"
+        );
+
+
+        oval.setAttribute(
+            "stroke",
+            "#8fd8ff"
+        );
+
+
+        oval.setAttribute(
+            "stroke-width",
+            "1.5"
+        );
+
+
+        oval.setAttribute(
+            "stroke-opacity",
+            "0.82"
+        );
+
+
+        oval.setAttribute(
+            "transform",
+            `rotate(${angle} ${cx} ${cy})`
+        );
+
+
+        svg.appendChild(oval);
+
+    });
+
+
+    gridEl.appendChild(svg);
+
+}
+
+
+/* =====================================================
+   判断是否为直线
+===================================================== */
+
+function isStraightWordPath(
+    word,
+    coords
+) {
+
+    if (
+        !ALLOWED_SET.has(word) ||
+        [...word].length !== coords.length
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        coords.some(
+            ([r,c],i) =>
+                !gridData[r] ||
+                gridData[r][c] !==
+                [...word][i]
+        )
+    ) {
+
+        return false;
+
+    }
+
+
+    if (coords.length === 1)
+        return true;
+
+
+    const dr =
+        coords[1][0] -
+        coords[0][0];
+
+
+    const dc =
+        coords[1][1] -
+        coords[0][1];
+
+
+    if (
+        Math.abs(dr) > 1 ||
+        Math.abs(dc) > 1 ||
+        (dr === 0 && dc === 0)
+    ) {
+
+        return false;
+
+    }
+
+
+    for (
+        let i = 1;
+        i < coords.length;
+        i++
+    ) {
+
+        if (
+            coords[i][0] !==
+            coords[0][0] + dr * i ||
+
+            coords[i][1] !==
+            coords[0][1] + dc * i
+        ) {
+
+            return false;
+
+        }
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   提交正确答案
+===================================================== */
+
+function commitFoundWord(
+    word,
+    coords
+) {
+
+    foundWords.push(word);
+
+    foundSet.add(word);
+
+    foundPaths.push(
+        coords.map(
+            ([r,c]) => [r,c]
+        )
+    );
+
+
+    coords.forEach(
+        ([r,c]) => {
+
+            if (
+                currentLevel[r][c] > 0
+            ) {
+
+                currentLevel[r][c]--;
+
+            }
+
+            paint(r,c);
+
+        }
+    );
+
+
+    renderFoundPaths();
+
     renderWords();
+
     updateCounter();
 
-    tip.textContent = '';
-    tip.className = 'tip';
-    wordInput.value = '';
-  }
+    save();
 
-  resetBtn.addEventListener('click', function () {
-    if (!confirm('确定重置所有进度吗？')) return;
-    resetAll();
-    flashSaveTip('✓ 已重置');
-  });
+    flashSaveTip();
 
-  submitBtn.addEventListener('click', check);
-  undoBtn.addEventListener('click', () => { selectedCells.pop(); renderSelection(); });
-  clearBtn.addEventListener('click', () => { clearSelection(); tip.textContent = ''; tip.className = 'tip'; });
 
-  // 输入框事件
-  inputSubmitBtn.addEventListener('click', checkInput);
-  wordInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      checkInput();
+    if (
+        foundWords.length ===
+        ALLOWED_WORDS.length
+    ) {
+
+        tip.textContent =
+            "🎉 全部找到了！";
+
+        tip.className =
+            "tip success";
+
+    } else {
+
+        tip.textContent =
+            "猜对了一个！";
+
+        tip.className =
+            "tip success";
+
     }
-  });
 
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(renderFoundPaths, 120);
-  });
+}
 
-  loadSave();
-  paintAll();
-  renderSelection();
-  renderFoundPaths();
-  renderWords();
-  updateCounter();
 
-  if (foundWords.length === ALLOWED_WORDS.length) {
-    tip.textContent = '🎉 全部找到了！';
-    tip.className = 'tip success';
-  }
+/* =====================================================
+   点击选字确认
+===================================================== */
+
+function check() {
+
+    if (!selectedCells.length) {
+
+        tip.textContent =
+            "请先点击选择文字。";
+
+        tip.className =
+            "tip";
+
+        return;
+
+    }
+
+
+    const text =
+        selectedCells
+            .map(
+                ([r,c]) =>
+                gridData[r][c]
+            )
+            .join("");
+
+
+    if (foundSet.has(text)) {
+
+        tip.textContent =
+            "这个词已经猜过了！";
+
+        tip.className =
+            "tip";
+
+        clearSelection();
+
+        return;
+
+    }
+
+
+    if (
+        !isStraightWordPath(
+            text,
+            selectedCells
+        )
+    ) {
+
+        tip.textContent =
+            "不正确";
+
+        tip.className =
+            "tip";
+
+        clearSelection();
+
+        return;
+
+    }
+
+
+    const coords =
+        selectedCells.map(
+            ([r,c]) => [r,c]
+        );
+
+
+    clearSelection();
+
+    commitFoundWord(
+        text,
+        coords
+    );
+
+}
+
+
+/* =====================================================
+   输入框确认
+===================================================== */
+
+function checkInput() {
+
+    const text =
+        wordInput.value.trim();
+
+
+    if (!text) {
+
+        tip.textContent =
+            "请输入词语。";
+
+        tip.className =
+            "tip";
+
+        wordInput.focus();
+
+        return;
+
+    }
+
+
+    if (foundSet.has(text)) {
+
+        tip.textContent =
+            "这个词已经猜过了！";
+
+        tip.className =
+            "tip";
+
+        wordInput.select();
+
+        return;
+
+    }
+
+
+    if (!ALLOWED_SET.has(text)) {
+
+        tip.textContent =
+            "不是有效的答案词。";
+
+        tip.className =
+            "tip";
+
+        wordInput.select();
+
+        return;
+
+    }
+
+
+    const coords =
+        findWord(text);
+
+
+    if (!coords) {
+
+        tip.textContent =
+            "方阵里找不到这个词的路径。";
+
+        tip.className =
+            "tip";
+
+        wordInput.select();
+
+        return;
+
+    }
+
+
+    clearSelection();
+
+    wordInput.value = "";
+
+
+    commitFoundWord(
+        text,
+        coords
+    );
+
+
+    wordInput.focus();
+
+}
+
+
+/* =====================================================
+   重置
+===================================================== */
+
+function resetAll() {
+
+    try {
+
+        localStorage.removeItem(
+            SAVE_KEY
+        );
+
+    } catch(e) {
+
+        console.warn(e);
+
+    }
+
+
+    currentLevel =
+        INIT_LEVELS.map(
+            row => [...row]
+        );
+
+
+    foundWords = [];
+
+    foundSet = new Set();
+
+    foundPaths = [];
+
+    selectedCells = [];
+
+
+    removeFoundOverlay();
+
+    paintAll();
+
+    renderSelection();
+
+    renderWords();
+
+    updateCounter();
+
+
+    tip.textContent = "";
+
+    tip.className = "tip";
+
+    wordInput.value = "";
+
+}
+
+
+/* =====================================================
+   按钮事件
+===================================================== */
+
+resetBtn.addEventListener(
+    "click",
+    function() {
+
+        if (
+            !confirm(
+                "确定重置所有进度吗？"
+            )
+        ) return;
+
+
+        resetAll();
+
+        flashSaveTip(
+            "✓ 已重置"
+        );
+
+    }
+);
+
+
+submitBtn.addEventListener(
+    "click",
+    check
+);
+
+
+undoBtn.addEventListener(
+    "click",
+    () => {
+
+        selectedCells.pop();
+
+        renderSelection();
+
+    }
+);
+
+
+clearBtn.addEventListener(
+    "click",
+    () => {
+
+        clearSelection();
+
+        tip.textContent = "";
+
+        tip.className = "tip";
+
+    }
+);
+
+
+inputSubmitBtn.addEventListener(
+    "click",
+    checkInput
+);
+
+
+wordInput.addEventListener(
+    "keydown",
+    e => {
+
+        if (e.key === "Enter") {
+
+            e.preventDefault();
+
+            checkInput();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   窗口变化
+===================================================== */
+
+let resizeTimer;
+
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        clearTimeout(
+            resizeTimer
+        );
+
+        resizeTimer =
+            setTimeout(
+                renderFoundPaths,
+                120
+            );
+
+    }
+);
+
+
+/* =====================================================
+   初始化
+===================================================== */
+
+loadSave();
+
+paintAll();
+
+renderSelection();
+
+renderFoundPaths();
+
+renderWords();
+
+updateCounter();
+
+
+if (
+    foundWords.length ===
+    ALLOWED_WORDS.length
+) {
+
+    tip.textContent =
+        "🎉 全部找到了！";
+
+    tip.className =
+        "tip success";
+
+}
+
 </script>
 
 </body>
